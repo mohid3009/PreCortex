@@ -46,9 +46,10 @@ export default function LineSidebar() {
   }, []);
 
   const scrollTo = (id) => {
-    const el = document.getElementById(id);
-    if (el) {
-      const topOffset = el.offsetTop;
+    const sectionIndex = SECTIONS.findIndex(s => s.id === id);
+    if (sectionIndex !== -1) {
+      // Offset by 1 to skip the Hero section
+      const topOffset = (sectionIndex + 1) * window.innerHeight;
       window.scrollTo({ top: topOffset, behavior: 'smooth' });
     }
   };

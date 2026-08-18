@@ -19,11 +19,17 @@ export default function Navbar({ sections }) {
   }, []);
 
   const scrollTo = (id) => {
-    const el = document.getElementById(id);
-    if (el) {
-      // offsetTop gives the distance from the top of the document layout context,
-      // which is constant and does not change dynamically with scrolling or sticky positioning.
-      const topOffset = el.offsetTop;
+    const sectionIndex = navLinks.findIndex(link => link.id === id);
+    if (sectionIndex !== -1) {
+      // Since each section is min-height: 100vh (full screen), the true scroll position
+      // for section index is exactly (index + 1) * window.innerHeight (offsetting the Hero section).
+      // This is a robust and deterministic scroll calculation.
+      const topOffset = (sectionIndex + 1) * window.innerHeight;
+      window.scrollTo({ top: topOffset, behavior: 'smooth' });
+      setMenuOpen(false);
+    } else if (id === 'contact') {
+      // Contact is the 5th section after Hero (Index 5)
+      const topOffset = 5 * window.innerHeight;
       window.scrollTo({ top: topOffset, behavior: 'smooth' });
       setMenuOpen(false);
     }
