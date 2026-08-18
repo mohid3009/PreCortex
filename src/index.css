@@ -1,0 +1,172 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+/* ─── Design tokens ─────────────────────────────────────────── */
+:root {
+  --bg-primary:    #050505;
+  --bg-secondary:  #080808;
+  --bg-surface:    #0B0B0B;
+  --bg-elevated:   #101010;
+
+  --text-primary:  #F5F5F5;
+  --text-secondary:#E8E8E8;
+  --text-muted:    #808080;
+  --text-subtle:   #555555;
+  --text-faint:    #333333;
+
+  --silver-light:  #E5E5E5;
+  --silver-mid:    #C8C8C8;
+  --silver-base:   #A8A8A8;
+  --silver-dark:   #777777;
+  --silver-deeper: #555555;
+
+  --border-faint:  rgba(255,255,255,0.05);
+  --border-subtle: rgba(255,255,255,0.08);
+  --border-dim:    rgba(255,255,255,0.10);
+
+  --radius-sm:   10px;
+  --radius-md:   14px;
+  --radius-lg:   18px;
+  --radius-xl:   20px;
+  --radius-pill: 100px;
+
+  --ease-premium: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-smooth:  cubic-bezier(0.4, 0, 0.2, 1);
+
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color-scheme: dark;
+  color: var(--text-muted);
+  background-color: var(--bg-primary);
+}
+
+/* ─── Page Section Stack (Overlapping Cards) ────────────────── */
+main {
+  position: relative;
+  background: var(--bg-primary);
+}
+
+/* Base style for all sections to act as overlapping cards */
+section, header, .hero-section {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* Overlapping effect via CSS sticky positioning */
+.hero-section {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+#intro {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  border-top-left-radius: 40px;
+  border-top-right-radius: 40px;
+  box-shadow: 0 -30px 100px rgba(0,0,0,0.9), 0 -1px 0 rgba(255,255,255,0.06);
+  background: #080808; 
+}
+
+#about {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  border-top-left-radius: 40px;
+  border-top-right-radius: 40px;
+  box-shadow: 0 -30px 100px rgba(0,0,0,0.5), 0 -1px 0 rgba(0,0,0,0.1);
+  background: #F7F7F7;
+}
+
+#features {
+  position: relative;
+  z-index: 4;
+  border-top-left-radius: 40px;
+  border-top-right-radius: 40px;
+  box-shadow: 0 -30px 100px rgba(0,0,0,0.9), 0 -1px 0 rgba(255,255,255,0.06);
+  background: #080808;
+}
+
+#technology {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  border-top-left-radius: 40px;
+  border-top-right-radius: 40px;
+  box-shadow: 0 -30px 100px rgba(0,0,0,0.5), 0 -1px 0 rgba(0,0,0,0.1);
+  background: #F7F7F7;
+}
+
+#contact {
+  position: sticky;
+  top: 0;
+  z-index: 6;
+  border-top-left-radius: 40px;
+  border-top-right-radius: 40px;
+  box-shadow: 0 -30px 100px rgba(0,0,0,0.9), 0 -1px 0 rgba(255,255,255,0.06);
+  background: #080808;
+}
+
+/* Adjust paddings/margins to handle card roundings elegantly */
+@media (max-width: 768px) {
+  #intro, #about, #features, #technology, #contact {
+    border-top-left-radius: 24px;
+    border-top-right-radius: 24px;
+  }
+}
+
+/* ─── Reset ─────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg-primary);
+  overflow-x: hidden;
+  line-height: 1.5;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+/* ─── Scrollbar ──────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg-primary); }
+::-webkit-scrollbar-thumb {
+  background: #222;
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover { background: #333; }
+
+/* ─── Focus ──────────────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid rgba(255,255,255,0.3);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ─── Selection ─────────────────────────────────────────────── */
+::selection {
+  background: rgba(255,255,255,0.12);
+  color: var(--text-primary);
+}
+
+/* ─── Reduced motion ────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  html { scroll-behavior: auto; }
+}
