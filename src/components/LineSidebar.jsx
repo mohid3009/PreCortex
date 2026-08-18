@@ -48,7 +48,7 @@ export default function LineSidebar() {
   const scrollTo = (id) => {
     const el = document.getElementById(id);
     if (el) {
-      const topOffset = el.getBoundingClientRect().top + window.pageYOffset;
+      const topOffset = el.offsetTop;
       window.scrollTo({ top: topOffset, behavior: 'smooth' });
     }
   };

@@ -21,7 +21,9 @@ export default function Navbar({ sections }) {
   const scrollTo = (id) => {
     const el = document.getElementById(id);
     if (el) {
-      const topOffset = el.getBoundingClientRect().top + window.pageYOffset;
+      // offsetTop gives the distance from the top of the document layout context,
+      // which is constant and does not change dynamically with scrolling or sticky positioning.
+      const topOffset = el.offsetTop;
       window.scrollTo({ top: topOffset, behavior: 'smooth' });
       setMenuOpen(false);
     }
