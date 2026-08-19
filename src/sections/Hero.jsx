@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import FaultyTerminal from '../components/FaultyTerminal';
+import { scrollToSection } from '../utils/scroll';
 
 export default function Hero() {
   const [mounted, setMounted] = useState(false);
@@ -278,7 +279,7 @@ export default function Hero() {
             </button>
             <button
               className="btn-secondary"
-              onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
+              onClick={() => scrollToSection('about')}
             >
               Learn How It Works
             </button>

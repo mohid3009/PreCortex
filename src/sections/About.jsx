@@ -33,8 +33,57 @@ export default function About() {
           line-height: 1.7;
           letter-spacing: -0.01em;
         }
+        .about-cmp-head {
+          display: grid;
+          grid-template-columns: 1.2fr 1fr 1.2fr;
+          background: #EAEAEA;
+          border-bottom: 1px solid rgba(0,0,0,0.12);
+          padding: 16px 24px;
+          font-family: 'Inter', sans-serif;
+          font-size: 12px;
+          font-weight: 800;
+          letter-spacing: 0.05em;
+          text-transform: uppercase;
+          color: #111111;
+        }
+        .about-cmp-row {
+          display: grid;
+          grid-template-columns: 1.2fr 1fr 1.2fr;
+          padding: 20px 24px;
+          font-family: 'Inter', sans-serif;
+          font-size: 14px;
+          line-height: 1.55;
+          gap: 0 16px;
+        }
+        .about-cmp-row .cmp-dim { font-weight: 700; color: #0D0D0D; }
+        .about-cmp-row .cmp-usual { color: #555555; }
+        .about-cmp-row .cmp-pre { color: #000000; font-weight: 650; }
+        .cmp-cell-label { display: none; }
+        .about-principles {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 20px;
+        }
         @media (max-width: 900px) {
           .about-inner { padding: 0 40px; }
+          .about-principles { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 720px) {
+          .about-cmp-head { display: none; }
+          .about-cmp-row {
+            grid-template-columns: 1fr;
+            gap: 10px;
+            padding: 18px 20px;
+          }
+          .cmp-cell-label {
+            display: block;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #888888;
+            margin-bottom: 3px;
+          }
         }
         @media (max-width: 640px) {
           .about-inner { padding: 0 24px; }
@@ -75,19 +124,7 @@ export default function About() {
               overflow: 'hidden',
               marginBottom: '56px'
             }}>
-              <div style={{
-                display: 'grid',
-                gridTemplateColumns: '1.2fr 1fr 1.2fr',
-                background: '#EAEAEA',
-                borderBottom: '1px solid rgba(0,0,0,0.12)',
-                padding: '16px 24px',
-                fontFamily: 'Inter, sans-serif',
-                fontSize: '12px',
-                fontWeight: 800,
-                letterSpacing: '0.05em',
-                textTransform: 'uppercase',
-                color: '#111111'
-              }}>
+              <div className="about-cmp-head">
                 <div>Dimension</div>
                 <div style={{ color: '#666666' }}>The usual approach</div>
                 <div style={{ color: '#000000' }}>PreCortex</div>
@@ -110,19 +147,13 @@ export default function About() {
                   precortex: 'A falsifiable hypothesis + a rewrite, an analogy, and a quiz tied to the diagnosed cause'
                 }
               ].map((row, idx) => (
-                <div key={row.label} style={{
-                  display: 'grid',
-                  gridTemplateColumns: '1.2fr 1fr 1.2fr',
-                  padding: '20px 24px',
+                <div key={row.label} className="about-cmp-row" style={{
                   borderBottom: idx === 2 ? 'none' : '1px solid rgba(0,0,0,0.08)',
-                  background: idx % 2 === 1 ? '#FAFAFA' : '#FFFFFF',
-                  fontFamily: 'Inter, sans-serif',
-                  fontSize: '14px',
-                  lineHeight: 1.55
+                  background: idx % 2 === 1 ? '#FAFAFA' : '#FFFFFF'
                 }}>
-                  <div style={{ fontWeight: 700, color: '#0D0D0D' }}>{row.label}</div>
-                  <div style={{ color: '#555555' }}>{row.usual}</div>
-                  <div style={{ color: '#000000', fontWeight: 650 }}>{row.precortex}</div>
+                  <div className="cmp-dim">{row.label}</div>
+                  <div className="cmp-usual"><span className="cmp-cell-label">The usual approach</span>{row.usual}</div>
+                  <div className="cmp-pre"><span className="cmp-cell-label">PreCortex</span>{row.precortex}</div>
                 </div>
               ))}
             </div>
@@ -130,11 +161,7 @@ export default function About() {
 
           {/* 3 Core Technical Principles */}
           <SectionReveal style={{ transitionDelay: '200ms' }}>
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(3, 1fr)',
-              gap: '20px'
-            }}>
+            <div className="about-principles">
               <div style={{
                 background: '#FFFFFF',
                 border: '1px solid rgba(0,0,0,0.10)',

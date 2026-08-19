@@ -126,7 +126,24 @@ export default function Intro() {
           pointer-events: none;
         }
 
+        /* ── Stats grid ──────────────────────────────────── */
+        .intro-stats {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 12px;
+          margin: 20px 0 24px;
+        }
+        .intro-stat-card {
+          background: rgba(255,255,255,0.04);
+          border: 1px solid rgba(255,255,255,0.09);
+          border-radius: 12px;
+          padding: 16px 14px;
+        }
+
         /* ── Responsive ──────────────────────────────────── */
+        @media (max-width: 640px) {
+          .intro-stats { grid-template-columns: 1fr; }
+        }
         @media (max-width: 960px) {
           .intro-inner {
             grid-template-columns: 1fr;
@@ -164,41 +181,20 @@ export default function Intro() {
               </p>
 
               {/* Stats Grid */}
-              <div style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(3, 1fr)',
-                gap: '12px',
-                marginBottom: '24px',
-                marginTop: '20px'
-              }}>
-                <div style={{
-                  background: 'rgba(255,255,255,0.04)',
-                  border: '1px solid rgba(255,255,255,0.09)',
-                  borderRadius: '12px',
-                  padding: '16px 14px'
-                }}>
+              <div className="intro-stats">
+                <div className="intro-stat-card">
                   <div style={{ fontSize: '24px', fontWeight: 800, color: '#FFFFFF', fontFamily: 'Inter, sans-serif', letterSpacing: '-0.03em' }}>~90%</div>
                   <div style={{ fontSize: '11.5px', color: '#D4D4D4', lineHeight: 1.4, marginTop: '4px' }}>of MOOC learners never finish the course they start</div>
                   <div style={{ fontSize: '9.5px', color: '#999999', marginTop: '6px', fontStyle: 'italic' }}>MIT / Reich & Ruipérez-Valiente, Science 2019</div>
                 </div>
 
-                <div style={{
-                  background: 'rgba(255,255,255,0.04)',
-                  border: '1px solid rgba(255,255,255,0.09)',
-                  borderRadius: '12px',
-                  padding: '16px 14px'
-                }}>
+                <div className="intro-stat-card">
                   <div style={{ fontSize: '24px', fontWeight: 800, color: '#FFFFFF', fontFamily: 'Inter, sans-serif', letterSpacing: '-0.03em' }}>6 min</div>
                   <div style={{ fontSize: '11.5px', color: '#D4D4D4', lineHeight: 1.4, marginTop: '4px' }}>median engagement span for lecture videos before disengaging</div>
                   <div style={{ fontSize: '9.5px', color: '#999999', marginTop: '6px', fontStyle: 'italic' }}>Guo et al., Learning@Scale 2014</div>
                 </div>
 
-                <div style={{
-                  background: 'rgba(255,255,255,0.04)',
-                  border: '1px solid rgba(255,255,255,0.09)',
-                  borderRadius: '12px',
-                  padding: '16px 14px'
-                }}>
+                <div className="intro-stat-card">
                   <div style={{ fontSize: '24px', fontWeight: 800, color: '#FFFFFF', fontFamily: 'Inter, sans-serif', letterSpacing: '-0.03em' }}>~30%</div>
                   <div style={{ fontSize: '11.5px', color: '#D4D4D4', lineHeight: 1.4, marginTop: '4px' }}>of lecture time lost to un-noticed mind-wandering</div>
                   <div style={{ fontSize: '9.5px', color: '#999999', marginTop: '6px', fontStyle: 'italic' }}>Smallwood & Schooler, attention research</div>

@@ -1,4 +1,5 @@
 import SectionReveal from '../components/SectionReveal';
+import { scrollToSection } from '../utils/scroll';
 
 export default function Contact() {
   return (
@@ -127,7 +128,7 @@ export default function Contact() {
                 </button>
                 <button
                   style={{ background: 'rgba(255,255,255,0.06)', color: '#D4D4D4', border: '1px solid rgba(255,255,255,0.14)', padding: '14px 28px', borderRadius: '14px', fontFamily: 'Inter, sans-serif', fontSize: '15px', fontWeight: 500, cursor: 'pointer', letterSpacing: '-0.01em', display: 'inline-flex', alignItems: 'center', gap: '8px', transition: 'all 0.25s cubic-bezier(0.22, 1, 0.36, 1)' }}
-                  onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
+                  onClick={() => scrollToSection('about')}
                 >
                   Review Judging Specs
                 </button>

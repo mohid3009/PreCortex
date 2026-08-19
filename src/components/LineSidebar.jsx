@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { sectionTop, scrollToSection } from '../utils/scroll';
 
 const SECTIONS = [
   { id: 'intro',      label: 'PROBLEM',     num: '01', light: false },
@@ -21,9 +22,12 @@ export default function LineSidebar() {
   useEffect(() => {
     const handleScroll = () => {
       const scrollPos = window.scrollY + window.innerHeight / 2;
-      const index = Math.floor(scrollPos / window.innerHeight);
-      const activeIdx = Math.min(Math.max(0, index - 1), SECTIONS.length - 1);
-      setActive(SECTIONS[activeIdx]?.id || 'intro');
+      let current = SECTIONS[0].id;
+      for (const s of SECTIONS) {
+        const top = sectionTop(s.id);
+        if (top !== null && scrollPos >= top) current = s.id;
+      }
+      setActive(current);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -31,13 +35,7 @@ export default function LineSidebar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const scrollTo = (id) => {
-    const sectionIndex = SECTIONS.findIndex(s => s.id === id);
-    if (sectionIndex !== -1) {
-      const topOffset = (sectionIndex + 1) * window.innerHeight;
-      window.scrollTo({ top: topOffset, behavior: 'smooth' });
-    }
-  };
+  const scrollTo = (id) => scrollToSection(id);
 
   const isLight = SECTIONS.find(s => s.id === active)?.light ?? false;
 

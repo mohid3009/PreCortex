@@ -1,9 +1,17 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
+import { scrollToSection } from '../utils/scroll';
 
-export default function Navbar({ sections }) {
+const navLinks = [
+  { label: 'Problem', id: 'intro' },
+  { label: 'Innovation', id: 'about' },
+  { label: 'Multi-Agent', id: 'technology' },
+  { label: 'SDG Goals', id: 'sdg' },
+  { label: 'Pitch', id: 'contact' },
+];
+
+export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState('');
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 40);
@@ -13,28 +21,15 @@ export default function Navbar({ sections }) {
 
   // Close menu on resize to desktop
   useEffect(() => {
-    const handleResize = () => { if (window.innerWidth > 768) setMenuOpen(false); };
+    const handleResize = () => { if (window.innerWidth > 900) setMenuOpen(false); };
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   const scrollTo = (id) => {
-    const sectionIndex = navLinks.findIndex(link => link.id === id);
-    if (sectionIndex !== -1) {
-      const topOffset = (sectionIndex + 1) * window.innerHeight;
-      window.scrollTo({ top: topOffset, behavior: 'smooth' });
-      setMenuOpen(false);
-    }
+    scrollToSection(id);
+    setMenuOpen(false);
   };
-
-  const navLinks = [
-    { label: 'Problem', id: 'intro' },
-    { label: 'Innovation', id: 'about' },
-    { label: 'Multi-Agent', id: 'technology' },
-    { label: 'SDG Goals', id: 'sdg' },
-    { label: 'Live Demo', id: 'work' },
-    { label: 'Pitch', id: 'contact' },
-  ];
 
   return (
     <>
@@ -80,14 +75,9 @@ export default function Navbar({ sections }) {
           width: 28px;
           height: 28px;
           border-radius: 7px;
-          background: linear-gradient(135deg, #555, #E5E5E5, #777);
           display: flex;
           align-items: center;
           justify-content: center;
-        }
-        .navbar-logo svg {
-          width: 14px;
-          height: 14px;
         }
         .navbar-wordmark {
           font-family: 'Inter', sans-serif;
@@ -144,7 +134,7 @@ export default function Navbar({ sections }) {
           background: none;
           border: none;
           cursor: pointer;
-          padding: 8px;
+          padding: 10px;
           border-radius: 8px;
           transition: background 0.2s;
         }
@@ -166,9 +156,11 @@ export default function Navbar({ sections }) {
           position: fixed;
           top: 94px;
           left: 50%;
-          transform: translateX(-50%);
           width: 78%;
           max-width: 1100px;
+          max-height: calc(100vh - 110px);
+          max-height: calc(100dvh - 110px);
+          overflow-y: auto;
           background: rgba(8, 8, 8, 0.95);
           backdrop-filter: blur(28px);
           -webkit-backdrop-filter: blur(28px);
@@ -219,12 +211,23 @@ export default function Navbar({ sections }) {
         }
         .mobile-menu-cta:hover { background: #FFFFFF; }
 
-        @media (max-width: 768px) {
-          .navbar { width: 92%; padding: 0 16px; }
+        @media (max-width: 900px) {
+          .navbar { width: 92%; }
           .navbar-links { display: none; }
-          .navbar-cta { display: none; }
           .navbar-hamburger { display: flex; }
           .mobile-menu { width: 92%; }
+        }
+        @media (max-width: 768px) {
+          .navbar {
+            top: 12px;
+            width: calc(100% - 24px);
+            padding: 0 8px 0 14px;
+          }
+          .navbar-cta { display: none; }
+          .mobile-menu {
+            top: 78px;
+            width: calc(100% - 24px);
+          }
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -233,9 +236,9 @@ export default function Navbar({ sections }) {
       `}</style>
 
       <nav className={`navbar${scrolled ? ' scrolled' : ''}`} role="navigation" aria-label="Main navigation">
-        <a className="navbar-brand" href="#hero" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>
-          <div className="navbar-logo" aria-hidden="true" style={{ background: 'none' }}>
-            <img src="/logo.png" alt="PreCortex Logo" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+        <a className="navbar-brand" href="#hero" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); setMenuOpen(false); }}>
+          <div className="navbar-logo" aria-hidden="true">
+            <img src="/logo.png" alt="" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
           </div>
           <span className="navbar-wordmark">PreCortex</span>
         </a>
@@ -272,12 +275,12 @@ export default function Navbar({ sections }) {
 
       <div className={`mobile-menu${menuOpen ? ' open' : ''}`} aria-hidden={!menuOpen}>
         {navLinks.map(link => (
-          <button key={link.id} className="mobile-menu-link" onClick={() => scrollTo(link.id)}>
+          <button key={link.id} className="mobile-menu-link" onClick={() => scrollTo(link.id)} tabIndex={menuOpen ? 0 : -1}>
             {link.label}
           </button>
         ))}
-        <button className="mobile-menu-cta" onClick={() => scrollTo('contact')}>
-          Our Product
+        <button className="mobile-menu-cta" onClick={() => window.location.href = 'http://172.16.59.127:5173/'} tabIndex={menuOpen ? 0 : -1}>
+          Explore
         </button>
       </div>
     </>

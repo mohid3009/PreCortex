@@ -76,9 +76,22 @@ export default function Technology() {
           border-radius: 12px;
         }
 
+        .tech-agents {
+          display: grid;
+          grid-template-columns: repeat(5, 1fr);
+          gap: 12px;
+          margin-bottom: 56px;
+        }
+        @media (max-width: 1100px) {
+          .tech-agents { grid-template-columns: repeat(3, 1fr); }
+        }
         @media (max-width: 960px) {
           .tech-inner { padding: 0 40px; }
           .tech-layout { grid-template-columns: 1fr; gap: 48px; }
+          .tech-agents { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 560px) {
+          .tech-agents { grid-template-columns: 1fr; margin-bottom: 40px; }
         }
         @media (max-width: 640px) {
           .tech-inner { padding: 0 24px; }
@@ -112,12 +125,7 @@ export default function Technology() {
 
           {/* 5 Agents Cards Grid */}
           <SectionReveal style={{ transitionDelay: '160ms' }}>
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(5, 1fr)',
-              gap: '12px',
-              marginBottom: '56px'
-            }}>
+            <div className="tech-agents">
               {[
                 {
                   id: 'A1',
