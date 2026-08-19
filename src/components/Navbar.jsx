@@ -254,7 +254,7 @@ export default function Navbar({ sections }) {
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <button className="navbar-cta" onClick={() => scrollTo('contact')}>
+          <button className="navbar-cta" onClick={() => window.location.href = 'http://172.16.59.127:5173/'}>
             Explore
           </button>
           <button
