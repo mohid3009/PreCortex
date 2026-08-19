@@ -16,7 +16,7 @@ export default function Contact() {
         }
         .contact-cta-block {
           text-align: center;
-          max-width: 600px;
+          max-width: 780px;
           margin: 0 auto;
           padding-bottom: 120px;
         }
@@ -29,20 +29,23 @@ export default function Contact() {
         }
         .contact-heading {
           font-family: 'Inter', sans-serif;
-          font-size: clamp(2.2rem, 4.5vw, 4rem);
-          font-weight: 650;
+          font-size: clamp(2.2rem, 4.5vw, 3.8rem);
+          font-weight: 700;
           letter-spacing: -0.04em;
-          color: #F5F5F5;
+          color: #FFFFFF;
           margin: 0 0 24px 0;
-          line-height: 1.03;
+          line-height: 1.05;
         }
         .contact-sub {
           font-family: 'Inter', sans-serif;
           font-size: 16px;
-          color: #666;
+          color: #B0B0B0;
           line-height: 1.65;
           letter-spacing: -0.01em;
           margin: 0 0 44px 0;
+          max-width: 580px;
+          margin-left: auto;
+          margin-right: auto;
         }
         .contact-buttons {
           display: flex;
@@ -50,48 +53,8 @@ export default function Contact() {
           justify-content: center;
           flex-wrap: wrap;
         }
-        .contact-team {
-          border-top: 1px solid rgba(255,255,255,0.05);
-          padding: 60px 0;
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 60px;
-          align-items: center;
-        }
-        .team-heading {
-          font-family: 'Inter', sans-serif;
-          font-size: 20px;
-          font-weight: 600;
-          letter-spacing: -0.025em;
-          color: #E8E8E8;
-          margin: 0 0 12px 0;
-        }
-        .team-body {
-          font-family: 'Inter', sans-serif;
-          font-size: 14px;
-          color: #555;
-          line-height: 1.7;
-          letter-spacing: -0.005em;
-          max-width: 400px;
-        }
-        .team-badges {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 8px;
-        }
-        .team-badge {
-          background: rgba(255,255,255,0.03);
-          border: 1px solid rgba(255,255,255,0.06);
-          color: #555;
-          font-family: 'Inter', sans-serif;
-          font-size: 12px;
-          font-weight: 500;
-          padding: 6px 12px;
-          border-radius: 8px;
-          letter-spacing: -0.005em;
-        }
         .footer {
-          border-top: 1px solid rgba(255,255,255,0.05);
+          border-top: 1px solid rgba(255,255,255,0.06);
           padding: 28px 0;
         }
         .footer-inner {
@@ -105,29 +68,28 @@ export default function Contact() {
         .footer-brand {
           font-family: 'Inter', sans-serif;
           font-size: 13px;
-          font-weight: 600;
-          color: #333;
+          font-weight: 700;
+          color: #FFFFFF;
           letter-spacing: -0.01em;
         }
         .footer-copy {
           font-family: 'Inter', sans-serif;
           font-size: 12px;
-          color: #333;
+          color: #888888;
           letter-spacing: -0.005em;
         }
         .footer-tagline {
           font-family: 'Inter', sans-serif;
-          font-size: 12px;
-          color: #2A2A2A;
+          font-size: 11px;
+          color: #888888;
           letter-spacing: 0.06em;
           text-transform: uppercase;
-          font-weight: 500;
+          font-weight: 600;
         }
 
         @media (max-width: 900px) {
           .contact-inner { padding: 0 40px; }
           .footer-inner { padding: 0 40px; }
-          .contact-team { grid-template-columns: 1fr; }
         }
         @media (max-width: 640px) {
           .contact-inner { padding: 0 24px; }
@@ -143,37 +105,32 @@ export default function Contact() {
           <SectionReveal>
             <div className="contact-cta-block">
               <div className="contact-eyebrow">
-                <span style={{ fontFamily: 'Inter, sans-serif', fontSize: '13px', fontWeight: 600, letterSpacing: '0.04em', background: 'linear-gradient(135deg, #555, #E5E5E5, #777)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>05</span>
-                <div style={{ width: '40px', height: '1px', background: 'rgba(255,255,255,0.1)' }} />
-                <span style={{ fontFamily: 'Inter, sans-serif', fontSize: '11px', fontWeight: 500, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#444' }}>Contact</span>
+                <span style={{ fontFamily: 'Inter, sans-serif', fontSize: '12px', fontWeight: 700, letterSpacing: '0.06em', backgroundImage: 'linear-gradient(135deg, #777, #FFFFFF, #AAA)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>PITCH</span>
+                <div style={{ width: '40px', height: '1px', background: 'rgba(255,255,255,0.18)' }} />
+                <span style={{ fontFamily: 'Inter, sans-serif', fontSize: '11px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#A3A3A3' }}>Closing Pitch</span>
               </div>
 
               <h2 className="contact-heading">
-                Stop publishing blind.
+                Every other tool tells you where learners left.<br />
+                <em style={{ fontStyle: 'normal', color: '#6EE7B7' }}>PreCortex tells you where they will leave, while there is still time to fix it.</em>
               </h2>
               <p className="contact-sub">
-                Join the researchers, educators, and content creators already using
-                 PreCortex to publish with precision.
+                Join the educators, researchers, and creators using PreCortex's multi-agent neural cortex simulation to eliminate attention drop-off before publishing.
               </p>
               <div className="contact-buttons">
                 <button
                   className="btn-primary"
                   style={{ background: '#F5F5F5', color: '#0A0A0A', border: 'none', padding: '14px 28px', borderRadius: '14px', fontFamily: 'Inter, sans-serif', fontSize: '15px', fontWeight: 600, cursor: 'pointer', letterSpacing: '-0.01em', display: 'inline-flex', alignItems: 'center', gap: '8px', transition: 'all 0.25s cubic-bezier(0.22, 1, 0.36, 1)' }}
-                  onMouseEnter={e => { e.currentTarget.style.background = '#FFFFFF'; e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 8px 30px rgba(255,255,255,0.18)'; }}
-                  onMouseLeave={e => { e.currentTarget.style.background = '#F5F5F5'; e.currentTarget.style.transform = ''; e.currentTarget.style.boxShadow = ''; }}
+                  onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                 >
-                  Our Product
+                  Run Neural Simulation
                 </button>
-                <a
-                  href="https://github.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{ background: 'rgba(255,255,255,0.04)', color: '#A0A0A0', border: '1px solid rgba(255,255,255,0.10)', padding: '14px 28px', borderRadius: '14px', fontFamily: 'Inter, sans-serif', fontSize: '15px', fontWeight: 500, cursor: 'pointer', letterSpacing: '-0.01em', display: 'inline-flex', alignItems: 'center', gap: '8px', textDecoration: 'none', transition: 'all 0.25s cubic-bezier(0.22, 1, 0.36, 1)' }}
-                  onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.08)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.20)'; e.currentTarget.style.color = '#E8E8E8'; }}
-                  onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.04)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.10)'; e.currentTarget.style.color = '#A0A0A0'; }}
+                <button
+                  style={{ background: 'rgba(255,255,255,0.06)', color: '#D4D4D4', border: '1px solid rgba(255,255,255,0.14)', padding: '14px 28px', borderRadius: '14px', fontFamily: 'Inter, sans-serif', fontSize: '15px', fontWeight: 500, cursor: 'pointer', letterSpacing: '-0.01em', display: 'inline-flex', alignItems: 'center', gap: '8px', transition: 'all 0.25s cubic-bezier(0.22, 1, 0.36, 1)' }}
+                  onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
                 >
-                  View on GitHub
-                </a>
+                  Review Judging Specs
+                </button>
               </div>
             </div>
           </SectionReveal>
@@ -182,8 +139,8 @@ export default function Contact() {
         <footer className="footer" role="contentinfo">
           <div className="footer-inner">
             <span className="footer-brand">PreCortex</span>
-            <span className="footer-copy">© 2026 PreCortex Labs</span>
-            <span className="footer-tagline">All prediction systems deployed</span>
+            <span className="footer-copy">© 2026 PreCortex Labs · TRIBE v2 Neural Cortex Engine</span>
+            <span className="footer-tagline">fsaverage5 · 20,484 Cortical Vertices</span>
           </div>
         </footer>
       </section>

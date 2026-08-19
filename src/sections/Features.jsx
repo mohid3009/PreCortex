@@ -174,34 +174,162 @@ export default function Features() {
         <div className="features-inner">
           <SectionReveal>
             <div className="features-eyebrow">
-              <span className="features-num">03</span>
+              <span className="features-num">SYSTEM PROOF</span>
               <div className="features-divider" />
-              <span className="features-tag-label">Features</span>
+              <span className="features-tag-label">Verification & Status</span>
             </div>
           </SectionReveal>
 
-          <div className="features-header">
+          <div className="features-header" style={{ marginBottom: '48px' }}>
             <SectionReveal style={{ transitionDelay: '60ms' }}>
-              <h2 className="features-heading">Everything you need to publish with confidence</h2>
+              <h2 className="features-heading">Not a mockup · The full pipeline runs today.</h2>
             </SectionReveal>
             <SectionReveal style={{ transitionDelay: '120ms' }}>
               <p className="features-sub">
-                PreCortex's intelligence layer surfaces what human editors and focus
-                groups can't — systematic, simulated pre-publication analysis at scale.
+                PreCortex isn't a design concept or static wireframe. Our end-to-end multi-agent pipeline is active, deployed, and operational.
               </p>
             </SectionReveal>
           </div>
 
+          {/* Verification Cards */}
           <SectionReveal style={{ transitionDelay: '180ms' }}>
-            <div className="features-grid" role="list">
-              {FEATURES.map((f) => (
-                <article key={f.title} className="feature-card" role="listitem">
-                  <span className="feature-tag">{f.tag}</span>
-                  <h3 className="feature-title">{f.title}</h3>
-                  <p className="feature-body">{f.body}</p>
-                  <div className="feature-line" aria-hidden="true" />
-                </article>
-              ))}
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(2, 1fr)',
+              gap: '20px',
+              marginBottom: '72px'
+            }}>
+              <div style={{
+                background: '#0D0D0D',
+                border: '1px solid rgba(255,255,255,0.08)',
+                borderRadius: '16px',
+                padding: '28px 24px',
+                display: 'flex',
+                gap: '16px',
+                alignItems: 'flex-start'
+              }}>
+                <div style={{
+                  width: '32px',
+                  height: '32px',
+                  borderRadius: '50%',
+                  background: 'rgba(110, 231, 183, 0.15)',
+                  border: '1px solid rgba(110, 231, 183, 0.3)',
+                  color: '#6EE7B7',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontWeight: 900,
+                  fontSize: '14px',
+                  flexShrink: 0
+                }}>✓</div>
+                <div>
+                  <h3 style={{ fontSize: '17px', fontWeight: 700, color: '#F5F5F5', margin: '0 0 8px 0' }}>
+                    Real GPU inference verified
+                  </h3>
+                  <p style={{ fontSize: '13.5px', color: '#999', lineHeight: 1.6, margin: 0 }}>
+                    TRIBE v2 running on CUDA on a separate machine, returning genuine 20,484-vertex predictions over the network.
+                  </p>
+                </div>
+              </div>
+
+              <div style={{
+                background: '#0D0D0D',
+                border: '1px solid rgba(255,255,255,0.08)',
+                borderRadius: '16px',
+                padding: '28px 24px',
+                display: 'flex',
+                gap: '16px',
+                alignItems: 'flex-start'
+              }}>
+                <div style={{
+                  width: '32px',
+                  height: '32px',
+                  borderRadius: '50%',
+                  background: 'rgba(110, 231, 183, 0.15)',
+                  border: '1px solid rgba(110, 231, 183, 0.3)',
+                  color: '#6EE7B7',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontWeight: 900,
+                  fontSize: '14px',
+                  flexShrink: 0
+                }}>✓</div>
+                <div>
+                  <h3 style={{ fontSize: '17px', fontWeight: 700, color: '#F5F5F5', margin: '0 0 8px 0' }}>
+                    End-to-end in minutes
+                  </h3>
+                  <p style={{ fontSize: '13.5px', color: '#999', lineHeight: 1.6, margin: 0 }}>
+                    upload → transcription → neural simulation → network analysis → LLM diagnosis → interactive report.
+                  </p>
+                </div>
+              </div>
+
+              <div style={{
+                background: '#0D0D0D',
+                border: '1px solid rgba(255,255,255,0.08)',
+                borderRadius: '16px',
+                padding: '28px 24px',
+                display: 'flex',
+                gap: '16px',
+                alignItems: 'flex-start'
+              }}>
+                <div style={{
+                  width: '32px',
+                  height: '32px',
+                  borderRadius: '50%',
+                  background: 'rgba(110, 231, 183, 0.15)',
+                  border: '1px solid rgba(110, 231, 183, 0.3)',
+                  color: '#6EE7B7',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontWeight: 900,
+                  fontSize: '14px',
+                  flexShrink: 0
+                }}>✓</div>
+                <div>
+                  <h3 style={{ fontSize: '17px', fontWeight: 700, color: '#F5F5F5', margin: '0 0 8px 0' }}>
+                    Real diagnoses
+                  </h3>
+                  <p style={{ fontSize: '13.5px', color: '#999', lineHeight: 1.6, margin: 0 }}>
+                    In testing, the Diagnosis Agent independently pinpointed a garbled phrase in the transcript as the likely confusion trigger, referencing the detected signal shape.
+                  </p>
+                </div>
+              </div>
+
+              <div style={{
+                background: '#0D0D0D',
+                border: '1px solid rgba(255,255,255,0.08)',
+                borderRadius: '16px',
+                padding: '28px 24px',
+                display: 'flex',
+                gap: '16px',
+                alignItems: 'flex-start'
+              }}>
+                <div style={{
+                  width: '32px',
+                  height: '32px',
+                  borderRadius: '50%',
+                  background: 'rgba(110, 231, 183, 0.15)',
+                  border: '1px solid rgba(110, 231, 183, 0.3)',
+                  color: '#6EE7B7',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontWeight: 900,
+                  fontSize: '14px',
+                  flexShrink: 0
+                }}>✓</div>
+                <div>
+                  <h3 style={{ fontSize: '17px', fontWeight: 700, color: '#F5F5F5', margin: '0 0 8px 0' }}>
+                    Two report modes
+                  </h3>
+                  <p style={{ fontSize: '13.5px', color: '#999', lineHeight: 1.6, margin: 0 }}>
+                    Plain-language view for teachers, full-evidence view for auditors, with live status, stop control, and GPU health in the UI.
+                  </p>
+                </div>
+              </div>
             </div>
           </SectionReveal>
         </div>

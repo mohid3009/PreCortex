@@ -35,9 +35,9 @@ export default function Work() {
     <>
       <style>{`
         .work-section {
-          background: #F7F7F7;
+          background: #080808;
           padding: 160px 0;
-          border-top: 1px solid rgba(0,0,0,0.06);
+          border-top: 1px solid rgba(255,255,255,0.05);
         }
         .work-inner {
           max-width: 1100px;
@@ -52,26 +52,26 @@ export default function Work() {
         }
         .work-num {
           font-family: 'Inter', sans-serif;
-          font-size: 13px;
-          font-weight: 600;
-          letter-spacing: 0.04em;
-          background: linear-gradient(135deg, #888, #1A1A1A, #555);
+          font-size: 12px;
+          font-weight: 700;
+          letter-spacing: 0.06em;
+          background: linear-gradient(135deg, #555, #E5E5E5, #777);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
         }
         .work-divider {
-          width: 60px;
+          width: 50px;
           height: 1px;
-          background: rgba(0,0,0,0.12);
+          background: rgba(255,255,255,0.12);
         }
         .work-tag-label {
           font-family: 'Inter', sans-serif;
           font-size: 11px;
-          font-weight: 500;
+          font-weight: 600;
           letter-spacing: 0.12em;
           text-transform: uppercase;
-          color: #999;
+          color: #666;
         }
         .work-header {
           display: grid;
@@ -83,35 +83,35 @@ export default function Work() {
         .work-heading {
           font-family: 'Inter', sans-serif;
           font-size: clamp(2rem, 3.5vw, 3rem);
-          font-weight: 650;
+          font-weight: 700;
           letter-spacing: -0.035em;
-          color: #0D0D0D;
+          color: #F5F5F5;
           margin: 0;
           line-height: 1.08;
         }
         .work-sub {
           font-family: 'Inter', sans-serif;
           font-size: 15px;
-          color: #666;
+          color: #888;
           line-height: 1.65;
           letter-spacing: -0.01em;
           margin: 0;
           padding-bottom: 4px;
         }
         .scan-panel {
-          background: #FFFFFF;
-          border: 1px solid rgba(0,0,0,0.08);
+          background: #0D0D0D;
+          border: 1px solid rgba(255,255,255,0.08);
           border-radius: 20px;
           overflow: hidden;
-          box-shadow: 0 2px 20px rgba(0,0,0,0.04);
+          box-shadow: 0 10px 40px rgba(0,0,0,0.4);
         }
         .scan-header {
           display: flex;
           justify-content: space-between;
           align-items: center;
           padding: 20px 28px;
-          border-bottom: 1px solid rgba(0,0,0,0.06);
-          background: #FAFAFA;
+          border-bottom: 1px solid rgba(255,255,255,0.06);
+          background: #141414;
         }
         .scan-status-dot {
           width: 7px;
@@ -119,31 +119,31 @@ export default function Work() {
           border-radius: 50%;
           transition: background 0.3s, box-shadow 0.3s;
         }
-        .scan-status-dot.idle { background: #D0D0D0; }
+        .scan-status-dot.idle { background: #555; }
         .scan-status-dot.active {
-          background: #1A1A1A;
-          box-shadow: 0 0 8px rgba(0,0,0,0.25);
+          background: #6EE7B7;
+          box-shadow: 0 0 10px rgba(110,231,183,0.5);
           animation: work-pulse 1.5s ease-in-out infinite;
         }
-        .scan-status-dot.done { background: #888; }
+        .scan-status-dot.done { background: #6EE7B7; }
         @keyframes work-pulse {
-          0%, 100% { box-shadow: 0 0 4px rgba(0,0,0,0.15); }
-          50% { box-shadow: 0 0 12px rgba(0,0,0,0.35); }
+          0%, 100% { box-shadow: 0 0 4px rgba(110,231,183,0.2); }
+          50% { box-shadow: 0 0 14px rgba(110,231,183,0.6); }
         }
         .scan-id {
           font-family: 'Inter', sans-serif;
           font-size: 11px;
-          font-weight: 500;
+          font-weight: 600;
           letter-spacing: 0.08em;
-          color: #AAA;
+          color: #777;
           text-transform: uppercase;
         }
         .scan-status-text {
           font-family: 'Inter', sans-serif;
           font-size: 11px;
-          font-weight: 500;
+          font-weight: 600;
           letter-spacing: 0.06em;
-          color: #AAA;
+          color: #6EE7B7;
           text-transform: uppercase;
         }
         .scan-body {
@@ -160,7 +160,7 @@ export default function Work() {
         .work-content-line {
           height: 7px;
           border-radius: 4px;
-          background: rgba(0,0,0,0.06);
+          background: rgba(255,255,255,0.08);
           position: relative;
           overflow: hidden;
         }
@@ -168,7 +168,7 @@ export default function Work() {
           content: '';
           position: absolute;
           inset: 0;
-          background: linear-gradient(90deg, transparent, rgba(0,0,0,0.03), transparent);
+          background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
           transform: translateX(-100%);
           animation: work-shimmer 2s ease-in-out infinite;
         }
@@ -180,22 +180,22 @@ export default function Work() {
           left: 0;
           right: 0;
           height: 1px;
-          background: linear-gradient(90deg, transparent, #1A1A1A, transparent);
-          box-shadow: 0 0 8px rgba(0,0,0,0.3), 0 0 20px rgba(0,0,0,0.1);
+          background: linear-gradient(90deg, transparent, #6EE7B7, transparent);
+          box-shadow: 0 0 8px rgba(110,231,183,0.6), 0 0 20px rgba(110,231,183,0.3);
           pointer-events: none;
           z-index: 10;
         }
         .work-progress-bar {
           margin: 20px 0 0;
-          height: 1px;
-          background: rgba(0,0,0,0.08);
-          border-radius: 1px;
+          height: 2px;
+          background: rgba(255,255,255,0.08);
+          border-radius: 2px;
           overflow: hidden;
         }
         .work-progress-fill {
           height: 100%;
-          background: linear-gradient(90deg, #888, #1A1A1A);
-          border-radius: 1px;
+          background: linear-gradient(90deg, #6EE7B7, #3B82F6);
+          border-radius: 2px;
           transition: width 0.1s linear;
         }
         .scan-results {
@@ -203,7 +203,7 @@ export default function Work() {
           grid-template-columns: repeat(3, 1fr);
           gap: 1px;
           margin-top: 20px;
-          border-top: 1px solid rgba(0,0,0,0.06);
+          border-top: 1px solid rgba(255,255,255,0.06);
           padding-top: 20px;
         }
         .result-item {
@@ -216,25 +216,25 @@ export default function Work() {
         .result-label {
           font-family: 'Inter', sans-serif;
           font-size: 10px;
-          font-weight: 500;
+          font-weight: 600;
           letter-spacing: 0.10em;
           text-transform: uppercase;
-          color: #AAA;
+          color: #777;
         }
         .result-value {
           font-family: 'Inter', sans-serif;
           font-size: 26px;
           font-weight: 700;
           letter-spacing: -0.04em;
-          color: #0D0D0D;
+          color: #F5F5F5;
           line-height: 1;
           transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
         }
-        .result-value.faded { color: #CCC; }
+        .result-value.faded { color: #555; }
         .result-placeholder {
           font-family: 'Inter', sans-serif;
-          font-size: 12px;
-          color: #BBB;
+          font-size: 13px;
+          color: #666;
           text-align: center;
           padding: 16px 0;
           letter-spacing: -0.01em;
@@ -247,8 +247,8 @@ export default function Work() {
           padding: 0 0 4px;
         }
         .btn-scan-light {
-          background: #0D0D0D;
-          color: #F5F5F5;
+          background: #F5F5F5;
+          color: #0A0A0A;
           border: none;
           padding: 11px 22px;
           border-radius: 10px;
@@ -263,19 +263,19 @@ export default function Work() {
           letter-spacing: -0.01em;
         }
         .btn-scan-light:hover:not(:disabled) {
-          background: #1A1A1A;
+          background: #FFFFFF;
           transform: translateY(-1px);
-          box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+          box-shadow: 0 6px 20px rgba(255,255,255,0.15);
         }
         .btn-scan-light:disabled {
-          background: rgba(0,0,0,0.08);
-          color: #AAA;
+          background: rgba(255,255,255,0.08);
+          color: #555;
           cursor: not-allowed;
         }
         .btn-reset-light {
           background: transparent;
-          color: #AAA;
-          border: 1px solid rgba(0,0,0,0.10);
+          color: #888;
+          border: 1px solid rgba(255,255,255,0.12);
           padding: 11px 16px;
           border-radius: 10px;
           font-family: 'Inter', sans-serif;
@@ -285,7 +285,7 @@ export default function Work() {
           transition: all 0.2s ease;
           letter-spacing: -0.01em;
         }
-        .btn-reset-light:hover { color: #555; border-color: rgba(0,0,0,0.18); }
+        .btn-reset-light:hover { color: #F5F5F5; border-color: rgba(255,255,255,0.25); }
 
         @keyframes work-scanDown {
           0% { top: 0; opacity: 0; }
@@ -316,9 +316,9 @@ export default function Work() {
         <div className="work-inner">
           <SectionReveal>
             <div className="work-eyebrow">
-              <span className="work-num">05</span>
+              <span className="work-num">DEMO</span>
               <div className="work-divider" />
-              <span className="work-tag-label">Live Demo</span>
+              <span className="work-tag-label">Live Simulation</span>
             </div>
           </SectionReveal>
 
@@ -328,8 +328,7 @@ export default function Work() {
             </SectionReveal>
             <SectionReveal style={{ transitionDelay: '120ms' }}>
               <p className="work-sub">
-                Run a scan on a draft content block and watch Athene's Tribe v2
-                agents predict audience engagement in real time.
+                Run a pre-publication cortex scan on a lecture audio segment and watch PreCortex detect DorsalAttention decay across 20,484 cortical vertices.
               </p>
             </SectionReveal>
           </div>
@@ -339,10 +338,10 @@ export default function Work() {
               <div className="scan-header">
                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                   <div className={`scan-status-dot ${isScanning ? 'active' : reactionData.engaged > 0 ? 'done' : 'idle'}`} aria-hidden="true" />
-                  <span className="scan-id">CONTENT_SIMULATOR_V2</span>
+                  <span className="scan-id">TRIBE_V2_CORTICAL_SIMULATOR</span>
                 </div>
                 <span className="scan-status-text" aria-live="polite">
-                  {isScanning ? `SIMULATING ${scanProgress}%` : reactionData.engaged > 0 ? 'ANALYSIS COMPLETE' : 'READY'}
+                  {isScanning ? `SIMULATING 20,484 VERTICES ${scanProgress}%` : reactionData.engaged > 0 ? '6:22 WEAK MOMENT DETECTED' : 'READY'}
                 </span>
               </div>
 
@@ -369,22 +368,22 @@ export default function Work() {
                     <>
                       <div className="result-item">
                         <span className="result-label">Engaged</span>
-                        <span className="result-value">{reactionData.engaged}%</span>
+                        <span className="result-value" style={{ color: '#6EE7B7' }}>{reactionData.engaged}%</span>
                       </div>
                       <div className="result-item">
                         <span className="result-label">Confused</span>
-                        <span className="result-value">{reactionData.confused}%</span>
+                        <span className="result-value" style={{ color: '#FBBF24' }}>{reactionData.confused}%</span>
                       </div>
                       <div className="result-item">
                         <span className="result-label">Drop-off</span>
-                        <span className="result-value faded">{reactionData.dropoff}%</span>
+                        <span className="result-value faded" style={{ color: '#F87171' }}>{reactionData.dropoff}%</span>
                       </div>
                     </>
                   ) : (
                     <p className="result-placeholder">
                       {isScanning
-                        ? 'Reading future audience resonance parameters…'
-                        : 'Trigger cognitive projection to see results'}
+                        ? 'Reading future audience resonance parameters across 20,484 vertices…'
+                        : 'Trigger cortical projection to see attention results'}
                     </p>
                   )}
                 </div>

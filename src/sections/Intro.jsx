@@ -33,7 +33,7 @@ export default function Intro() {
           font-size: 12px;
           font-weight: 700;
           letter-spacing: 0.06em;
-          background: linear-gradient(135deg, #555, #E5E5E5, #777);
+          background: linear-gradient(135deg, #777, #FFFFFF, #AAA);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
@@ -41,15 +41,15 @@ export default function Intro() {
         .intro-divider-line {
           width: 40px;
           height: 1px;
-          background: rgba(255,255,255,0.15);
+          background: rgba(255,255,255,0.20);
         }
         .intro-tag {
           font-family: 'Inter', sans-serif;
-          font-size: 10px;
+          font-size: 11px;
           font-weight: 600;
           letter-spacing: 0.14em;
           text-transform: uppercase;
-          color: #555;
+          color: #A3A3A3;
         }
         .intro-heading {
           font-family: 'Inter', sans-serif;
@@ -57,46 +57,18 @@ export default function Intro() {
           font-weight: 700;
           line-height: 1.06;
           letter-spacing: -0.036em;
-          color: #F5F5F5;
+          color: #FFFFFF;
           margin: 0 0 26px 0;
         }
         .intro-body {
           font-family: 'Inter', sans-serif;
           font-size: 15.5px;
-          color: #888;
+          color: #B0B0B0;
           line-height: 1.75;
           letter-spacing: -0.008em;
           font-weight: 400;
-          max-width: 400px;
+          max-width: 480px;
           margin: 0 0 44px 0;
-        }
-        .intro-callouts {
-          display: flex;
-          flex-direction: column;
-          gap: 13px;
-          border-left: 1px solid rgba(255,255,255,0.08);
-          padding-left: 20px;
-        }
-        .intro-callout {
-          display: flex;
-          align-items: baseline;
-          gap: 10px;
-        }
-        .callout-dot {
-          width: 3px;
-          height: 3px;
-          border-radius: 50%;
-          background: #555;
-          flex-shrink: 0;
-          margin-top: 2px;
-        }
-        .callout-text {
-          font-family: 'Inter', sans-serif;
-          font-size: 13px;
-          color: #888;
-          letter-spacing: -0.008em;
-          font-weight: 440;
-          line-height: 1.5;
         }
 
         /* ── Right: brain panel ──────────────────────────── */
@@ -106,13 +78,12 @@ export default function Intro() {
           height: 540px;
           position: relative;
           overflow: hidden;
-          border: 1px solid rgba(255,255,255,0.06);
+          border: 1px solid rgba(255,255,255,0.10);
           box-shadow:
-            0 0 0 1px rgba(255,255,255,0.03),
-            0 30px 80px rgba(0,0,0,0.22),
-            0 4px 16px rgba(0,0,0,0.12);
+            0 0 0 1px rgba(255,255,255,0.05),
+            0 30px 80px rgba(0,0,0,0.4),
+            0 4px 16px rgba(0,0,0,0.2);
         }
-        /* Vignette — frames the brain naturally */
         .brain-vignette {
           position: absolute;
           inset: 0;
@@ -129,11 +100,11 @@ export default function Intro() {
           bottom: 22px;
           left: 26px;
           font-family: 'Inter', sans-serif;
-          font-size: 9px;
+          font-size: 10px;
           letter-spacing: 0.14em;
           text-transform: uppercase;
-          color: rgba(255,255,255,0.20);
-          font-weight: 500;
+          color: rgba(255,255,255,0.60);
+          font-weight: 600;
           z-index: 2;
           pointer-events: none;
         }
@@ -141,16 +112,16 @@ export default function Intro() {
           position: absolute;
           top: 20px;
           right: 20px;
-          background: rgba(255,255,255,0.05);
-          border: 1px solid rgba(255,255,255,0.08);
+          background: rgba(255,255,255,0.08);
+          border: 1px solid rgba(255,255,255,0.15);
           border-radius: 8px;
           padding: 6px 12px;
           font-family: 'Inter', sans-serif;
-          font-size: 9px;
+          font-size: 10px;
           font-weight: 600;
           letter-spacing: 0.10em;
           text-transform: uppercase;
-          color: rgba(255,255,255,0.30);
+          color: rgba(255,255,255,0.75);
           z-index: 2;
           pointer-events: none;
         }
@@ -170,9 +141,6 @@ export default function Intro() {
           .intro-section { padding: 100px 0; }
           .intro-brain-panel { height: 300px; }
         }
-        @media (prefers-reduced-motion: reduce) {
-          .intro-brain-panel canvas { animation: none !important; }
-        }
       `}</style>
 
       <section id="intro" className="intro-section">
@@ -182,33 +150,73 @@ export default function Intro() {
           <SectionReveal>
             <div>
               <div className="intro-eyebrow">
-                <span className="intro-num">01</span>
+                <span className="intro-num">CRITERION 01</span>
                 <div className="intro-divider-line" />
-                <span className="intro-tag">Intro</span>
+                <span className="intro-tag">Problem understanding</span>
               </div>
 
               <h2 className="intro-heading">
-                An artificial audience.<br />Before you publish.
+                Educators get feedback only after the damage is done.
               </h2>
 
               <p className="intro-body">
-                Tribe v2 deploys hundreds of cognitive agent personas — each
-                seeded with real behavioral data — to read your content before
-                it reaches anyone. They surface confusion, predict drop-off, and
-                expose gaps your editors can't see.
+                Today, a teacher discovers a confusing explanation the same way everyone else does: too late. Drop-off analytics arrive after thousands of learners have already left. Quiz failures arrive after the exam. And none of those signals say which sentence lost the room, or why. The feedback loop in education is measured in semesters. The attention loss it fails to catch is measured in seconds.
               </p>
 
-              <div className="intro-callouts" role="list">
-                {[
-                  '260+ independent cognitive agents per simulation',
-                  'Grounded in real audience behavioral history',
-                  'Paragraph-level engagement and confusion scoring',
-                ].map(text => (
-                  <div className="intro-callout" key={text} role="listitem">
-                    <div className="callout-dot" aria-hidden="true" />
-                    <span className="callout-text">{text}</span>
-                  </div>
-                ))}
+              {/* Stats Grid */}
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(3, 1fr)',
+                gap: '12px',
+                marginBottom: '24px',
+                marginTop: '20px'
+              }}>
+                <div style={{
+                  background: 'rgba(255,255,255,0.04)',
+                  border: '1px solid rgba(255,255,255,0.09)',
+                  borderRadius: '12px',
+                  padding: '16px 14px'
+                }}>
+                  <div style={{ fontSize: '24px', fontWeight: 800, color: '#FFFFFF', fontFamily: 'Inter, sans-serif', letterSpacing: '-0.03em' }}>~90%</div>
+                  <div style={{ fontSize: '11.5px', color: '#D4D4D4', lineHeight: 1.4, marginTop: '4px' }}>of MOOC learners never finish the course they start</div>
+                  <div style={{ fontSize: '9.5px', color: '#999999', marginTop: '6px', fontStyle: 'italic' }}>MIT / Reich & Ruipérez-Valiente, Science 2019</div>
+                </div>
+
+                <div style={{
+                  background: 'rgba(255,255,255,0.04)',
+                  border: '1px solid rgba(255,255,255,0.09)',
+                  borderRadius: '12px',
+                  padding: '16px 14px'
+                }}>
+                  <div style={{ fontSize: '24px', fontWeight: 800, color: '#FFFFFF', fontFamily: 'Inter, sans-serif', letterSpacing: '-0.03em' }}>6 min</div>
+                  <div style={{ fontSize: '11.5px', color: '#D4D4D4', lineHeight: 1.4, marginTop: '4px' }}>median engagement span for lecture videos before disengaging</div>
+                  <div style={{ fontSize: '9.5px', color: '#999999', marginTop: '6px', fontStyle: 'italic' }}>Guo et al., Learning@Scale 2014</div>
+                </div>
+
+                <div style={{
+                  background: 'rgba(255,255,255,0.04)',
+                  border: '1px solid rgba(255,255,255,0.09)',
+                  borderRadius: '12px',
+                  padding: '16px 14px'
+                }}>
+                  <div style={{ fontSize: '24px', fontWeight: 800, color: '#FFFFFF', fontFamily: 'Inter, sans-serif', letterSpacing: '-0.03em' }}>~30%</div>
+                  <div style={{ fontSize: '11.5px', color: '#D4D4D4', lineHeight: 1.4, marginTop: '4px' }}>of lecture time lost to un-noticed mind-wandering</div>
+                  <div style={{ fontSize: '9.5px', color: '#999999', marginTop: '6px', fontStyle: 'italic' }}>Smallwood & Schooler, attention research</div>
+                </div>
+              </div>
+
+              {/* Summary Gap Callout */}
+              <div style={{
+                background: 'linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02))',
+                borderLeft: '3px solid #F5F5F5',
+                padding: '14px 18px',
+                borderRadius: '0 10px 10px 0',
+                fontSize: '13.5px',
+                color: '#E5E5E5',
+                lineHeight: 1.6,
+                fontFamily: 'Inter, sans-serif'
+              }}>
+                The problem is not a lack of content. It is that no tool tells a creator where attention breaks before the content ships. <strong style={{ color: '#FFFFFF' }}>That is the exact gap PreCortex closes.</strong>
               </div>
             </div>
           </SectionReveal>
@@ -216,10 +224,12 @@ export default function Intro() {
           {/* ── Right column: brain ── */}
           <div
             className="intro-brain-panel"
-            aria-label="Tribe v2 neural simulation visualisation"
+            aria-label="TRIBE v2 cortical simulation visualizer"
           >
+            <div className="brain-badge">fsaverage5 · 20,484 Vertices</div>
             <BrainViz />
             <div className="brain-vignette" aria-hidden="true" />
+            <div className="brain-label">TRIBE v2 Neural Cortex Simulation</div>
           </div>
 
         </div>

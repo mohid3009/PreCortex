@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react';
 
 const SECTIONS = [
-  { id: 'intro',      label: 'INTRO',      num: '01', light: false },
-  { id: 'about',      label: 'ABOUT',      num: '02', light: true  },
-  { id: 'features',   label: 'FEATURES',   num: '03', light: false },
-  { id: 'technology', label: 'TECHNOLOGY', num: '04', light: true  },
-
-  { id: 'contact',    label: 'CONTACT',    num: '05', light: false },
+  { id: 'intro',      label: 'PROBLEM',     num: '01', light: false },
+  { id: 'about',      label: 'INNOVATION',  num: '02', light: true  },
+  { id: 'technology', label: 'MULTI-AGENT', num: '03', light: false },
+  { id: 'sdg',        label: 'SDG GOALS',   num: '04', light: true  },
+  { id: 'contact',    label: 'PITCH',       num: '05', light: false },
 ];
 
 export default function LineSidebar() {
@@ -21,26 +20,13 @@ export default function LineSidebar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      // Find the currently visible section based on scroll position
-      const scrollPos = window.scrollY + window.innerHeight / 3;
-      let currentSection = '';
-
-      for (const section of SECTIONS) {
-        const el = document.getElementById(section.id);
-        if (el) {
-          const top = el.getBoundingClientRect().top + window.pageYOffset;
-          // Since all sections are sticky, they sit at their top position.
-          // We check if the scroll has passed their top entry.
-          if (scrollPos >= top) {
-            currentSection = section.id;
-          }
-        }
-      }
-      setActive(currentSection || 'intro');
+      const scrollPos = window.scrollY + window.innerHeight / 2;
+      const index = Math.floor(scrollPos / window.innerHeight);
+      const activeIdx = Math.min(Math.max(0, index - 1), SECTIONS.length - 1);
+      setActive(SECTIONS[activeIdx]?.id || 'intro');
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-    // Run once on load to set initial active state
     handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -48,7 +34,6 @@ export default function LineSidebar() {
   const scrollTo = (id) => {
     const sectionIndex = SECTIONS.findIndex(s => s.id === id);
     if (sectionIndex !== -1) {
-      // Offset by 1 to skip the Hero section
       const topOffset = (sectionIndex + 1) * window.innerHeight;
       window.scrollTo({ top: topOffset, behavior: 'smooth' });
     }
@@ -104,8 +89,7 @@ export default function LineSidebar() {
           border-radius: 50%;
           transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
           flex-shrink: 0;
-          /* dark default */
-          background: rgba(255,255,255,0.18);
+          background: rgba(255,255,255,0.40);
         }
         .sidebar-segment {
           width: 2px;
@@ -113,8 +97,7 @@ export default function LineSidebar() {
           position: relative;
           overflow: hidden;
           transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
-          /* dark default */
-          background: rgba(255,255,255,0.10);
+          background: rgba(255,255,255,0.18);
         }
         .sidebar-segment::after {
           content: '';
@@ -123,8 +106,7 @@ export default function LineSidebar() {
           width: 100%;
           height: 0%;
           transition: height 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-          /* dark default fill */
-          background: linear-gradient(to bottom, #E5E5E5, #A8A8A8);
+          background: linear-gradient(to bottom, #FFFFFF, #C8C8C8);
         }
 
         /* ── Label ────────────────────────────────────────── */
@@ -138,8 +120,7 @@ export default function LineSidebar() {
           opacity: 0;
           transform: translateX(-4px);
           transition: opacity 0.3s ease, transform 0.3s ease, color 0.3s ease;
-          /* dark default */
-          color: rgba(255,255,255,0.20);
+          color: rgba(255,255,255,0.60);
         }
 
         /* ── Dark active states ───────────────────────────── */
@@ -147,44 +128,45 @@ export default function LineSidebar() {
         .sidebar-item.active .sidebar-dot {
           width: 4px;
           height: 4px;
-          background: #E5E5E5;
-          box-shadow: 0 0 8px rgba(229,229,229,0.6);
+          background: #FFFFFF;
+          box-shadow: 0 0 8px rgba(255,255,255,0.8);
         }
         .sidebar-item:hover .sidebar-label,
         .sidebar-item.active .sidebar-label {
           opacity: 1;
           transform: translateX(0);
-          color: rgba(255,255,255,0.60);
+          color: rgba(255,255,255,0.85);
         }
         .sidebar-item.active .sidebar-label {
-          color: #D8D8D8;
+          color: #FFFFFF;
+          font-weight: 700;
         }
 
         /* ── LIGHT theme overrides ────────────────────────── */
         .line-sidebar.light .sidebar-dot {
-          background: rgba(0,0,0,0.18);
+          background: rgba(0,0,0,0.30);
         }
         .line-sidebar.light .sidebar-segment {
-          background: rgba(0,0,0,0.10);
+          background: rgba(0,0,0,0.18);
         }
         .line-sidebar.light .sidebar-segment::after {
-          background: linear-gradient(to bottom, #1A1A1A, #555);
+          background: linear-gradient(to bottom, #0A0A0A, #444);
         }
         .line-sidebar.light .sidebar-label {
-          color: rgba(0,0,0,0.25);
+          color: rgba(0,0,0,0.55);
         }
         .line-sidebar.light .sidebar-item.active .sidebar-dot {
           width: 4px;
           height: 4px;
-          background: #1A1A1A;
-          box-shadow: 0 0 8px rgba(0,0,0,0.25);
+          background: #0A0A0A;
+          box-shadow: 0 0 8px rgba(0,0,0,0.35);
         }
         .line-sidebar.light .sidebar-item:hover .sidebar-label,
         .line-sidebar.light .sidebar-item.active .sidebar-label {
-          color: rgba(0,0,0,0.60);
+          color: rgba(0,0,0,0.85);
         }
         .line-sidebar.light .sidebar-item.active .sidebar-label {
-          color: #1A1A1A;
+          color: #0A0A0A;
           font-weight: 700;
         }
 

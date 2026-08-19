@@ -41,7 +41,7 @@
   background-color: var(--bg-primary);
 }
 
-/* ─── Page Section Stack (Overlapping Cards) ────────────────── */
+/* ─── Page Section Stack (Overlapping Sticky Cards) ────────── */
 main {
   position: relative;
   background: var(--bg-primary);
@@ -49,21 +49,18 @@ main {
 
 /* Base style for all sections to act as overlapping cards */
 section, header, .hero-section {
-  position: relative;
+  position: sticky;
+  top: 0;
   width: 100%;
   min-height: 100vh;
 }
 
-/* Overlapping effect via CSS sticky positioning */
-.hero-section {
-  position: sticky;
-  top: 0;
+#hero {
   z-index: 1;
+  background: #050505;
 }
 
 #intro {
-  position: sticky;
-  top: 0;
   z-index: 2;
   border-top-left-radius: 40px;
   border-top-right-radius: 40px;
@@ -72,17 +69,14 @@ section, header, .hero-section {
 }
 
 #about {
-  position: sticky;
-  top: 0;
   z-index: 3;
   border-top-left-radius: 40px;
   border-top-right-radius: 40px;
-  box-shadow: 0 -30px 100px rgba(0,0,0,0.5), 0 -1px 0 rgba(0,0,0,0.1);
+  box-shadow: 0 -30px 100px rgba(0,0,0,0.4), 0 -1px 0 rgba(0,0,0,0.08);
   background: #F7F7F7;
 }
 
-#features {
-  position: relative;
+#technology {
   z-index: 4;
   border-top-left-radius: 40px;
   border-top-right-radius: 40px;
@@ -90,19 +84,15 @@ section, header, .hero-section {
   background: #080808;
 }
 
-#technology {
-  position: sticky;
-  top: 0;
+#sdg {
   z-index: 5;
   border-top-left-radius: 40px;
   border-top-right-radius: 40px;
-  box-shadow: 0 -30px 100px rgba(0,0,0,0.5), 0 -1px 0 rgba(0,0,0,0.1);
+  box-shadow: 0 -30px 100px rgba(0,0,0,0.4), 0 -1px 0 rgba(0,0,0,0.08);
   background: #F7F7F7;
 }
 
 #contact {
-  position: sticky;
-  top: 0;
   z-index: 6;
   border-top-left-radius: 40px;
   border-top-right-radius: 40px;
@@ -112,7 +102,7 @@ section, header, .hero-section {
 
 /* Adjust paddings/margins to handle card roundings elegantly */
 @media (max-width: 768px) {
-  #intro, #about, #features, #technology, #contact {
+  #intro, #about, #technology, #sdg, #contact {
     border-top-left-radius: 24px;
     border-top-right-radius: 24px;
   }

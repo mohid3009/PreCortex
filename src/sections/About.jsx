@@ -1,44 +1,5 @@
 import SectionReveal from '../components/SectionReveal';
 
-const HOW_ITEMS = [
-  {
-    step: '01',
-    title: 'RAG-Grounded Context',
-    body: 'PreCortex retrieves existing audience metrics, prior course feedback, and community sentiment datasets to build a precise local knowledge profile for your content.',
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-        <rect x="2" y="2" width="7" height="7" rx="1.5" stroke="#777" strokeWidth="1.2"/>
-        <rect x="11" y="2" width="7" height="7" rx="1.5" stroke="#777" strokeWidth="1.2"/>
-        <rect x="2" y="11" width="7" height="7" rx="1.5" stroke="#777" strokeWidth="1.2"/>
-        <path d="M14.5 11v6M11.5 14h6" stroke="#A8A8A8" strokeWidth="1.2" strokeLinecap="round"/>
-      </svg>
-    ),
-  },
-  {
-    step: '02',
-    title: 'Tribe v2 Simulation',
-    body: 'We run your drafts through multi-agent student personas designed to mimic real cognitive load, attention span, and frustration points across diverse audience segments.',
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-        <circle cx="7" cy="7" r="3" stroke="#777" strokeWidth="1.2"/>
-        <circle cx="13" cy="7" r="3" stroke="#777" strokeWidth="1.2"/>
-        <path d="M2 17c0-2.76 2.24-5 5-5h6c2.76 0 5 2.24 5 5" stroke="#A8A8A8" strokeWidth="1.2" strokeLinecap="round"/>
-      </svg>
-    ),
-  },
-  {
-    step: '03',
-    title: 'Pre-cognition Reporting',
-    body: 'Receive feedback down to specific paragraphs, with visual heat maps showing where reader retention drops — before you ever hit publish.',
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-        <path d="M3 14l4-4 3 3 4-5 3 3" stroke="#A8A8A8" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
-        <rect x="2" y="2" width="16" height="16" rx="2" stroke="#777" strokeWidth="1.2"/>
-      </svg>
-    ),
-  },
-];
-
 export default function About() {
   return (
     <>
@@ -54,7 +15,7 @@ export default function About() {
           padding: 0 80px;
         }
         .about-header {
-          margin-bottom: 80px;
+          margin-bottom: 48px;
         }
         .about-heading {
           font-family: 'Inter', sans-serif;
@@ -64,122 +25,160 @@ export default function About() {
           color: #0D0D0D;
           margin: 0 0 20px 0;
           line-height: 1.08;
-          max-width: 520px;
         }
         .about-sub {
           font-family: 'Inter', sans-serif;
-          font-size: 16px;
-          color: #666;
-          max-width: 480px;
-          line-height: 1.65;
+          font-size: 15.5px;
+          color: #333333;
+          line-height: 1.7;
           letter-spacing: -0.01em;
         }
-        .about-steps {
-          display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          gap: 1px;
-          background: rgba(0,0,0,0.06);
-          border-radius: 20px;
-          overflow: hidden;
-          border: 1px solid rgba(0,0,0,0.07);
-        }
-        .step-card {
-          background: #FFFFFF;
-          padding: 44px 36px;
-          display: flex;
-          flex-direction: column;
-          gap: 20px;
-          position: relative;
-          transition: background 0.3s ease;
-          cursor: default;
-        }
-        .step-card:hover { background: #FAFAFA; }
-        .step-card::before {
-          content: attr(data-step);
-          position: absolute;
-          top: 36px;
-          right: 36px;
-          font-family: 'Inter', sans-serif;
-          font-size: 11px;
-          font-weight: 600;
-          letter-spacing: 0.06em;
-          background: linear-gradient(135deg, #888, #1A1A1A, #555);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
-        }
-        .step-icon {
-          width: 40px;
-          height: 40px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          background: rgba(0,0,0,0.03);
-          border: 1px solid rgba(0,0,0,0.07);
-          border-radius: 10px;
-        }
-        .step-title {
-          font-family: 'Inter', sans-serif;
-          font-size: 17px;
-          font-weight: 650;
-          color: #0D0D0D;
-          letter-spacing: -0.02em;
-          line-height: 1.2;
-          margin: 0;
-        }
-        .step-body {
-          font-family: 'Inter', sans-serif;
-          font-size: 14px;
-          color: #666;
-          line-height: 1.7;
-          letter-spacing: -0.005em;
-          margin: 0;
-        }
-
         @media (max-width: 900px) {
           .about-inner { padding: 0 40px; }
-          .about-steps { grid-template-columns: 1fr; }
         }
         @media (max-width: 640px) {
           .about-inner { padding: 0 24px; }
           .about-section { padding: 100px 0; }
-          .step-card { padding: 32px 24px; }
         }
       `}</style>
 
       <section id="about" className="about-section">
         <div className="about-inner">
           <SectionReveal>
-            <div className="section-eyebrow" style={{ display: 'flex', alignItems: 'center', gap: '20px', marginBottom: '40px' }}>
-              <span className="section-num" style={{ fontFamily: 'Inter, sans-serif', fontSize: '13px', fontWeight: 600, letterSpacing: '0.04em', background: 'linear-gradient(135deg, #888, #1A1A1A, #555)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>02</span>
-              <div style={{ width: '60px', height: '1px', background: 'rgba(0,0,0,0.12)' }} />
-              <span style={{ fontFamily: 'Inter, sans-serif', fontSize: '11px', fontWeight: 500, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#999' }}>About</span>
+            <div className="section-eyebrow" style={{ display: 'flex', alignItems: 'center', gap: '20px', marginBottom: '32px' }}>
+              <span className="section-num" style={{ fontFamily: 'Inter, sans-serif', fontSize: '12px', fontWeight: 700, letterSpacing: '0.06em', background: 'linear-gradient(135deg, #666, #0A0A0A, #444)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>CRITERION 02</span>
+              <div style={{ width: '50px', height: '1px', background: 'rgba(0,0,0,0.18)' }} />
+              <span style={{ fontFamily: 'Inter, sans-serif', fontSize: '11px', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#555555' }}>Uniqueness & innovation</span>
             </div>
           </SectionReveal>
 
           <div className="about-header">
             <SectionReveal style={{ transitionDelay: '60ms' }}>
-              <h2 className="about-heading">Three-phase intelligence engine</h2>
+              <h2 className="about-heading" style={{ maxWidth: '640px' }}>
+                We don't survey learners. We simulate their cortex.
+              </h2>
             </SectionReveal>
             <SectionReveal style={{ transitionDelay: '120ms' }}>
-              <p className="about-sub">
-                From retrieval to simulation to reporting — a closed-loop system
-                that closes the publish gap entirely.
+              <p className="about-sub" style={{ maxWidth: '740px' }}>
+                Every existing tool measures engagement after the fact: watch time, clicks, camera-based emotion guesses. PreCortex is built on <strong style={{ color: '#000000' }}>TRIBE v2</strong>, a neural network trained to predict group-average fMRI brain activity directly from stimulus content. We run the lecture through a simulated cortex, project the predicted activity onto <strong style={{ color: '#000000' }}>150 anatomical brain regions (Destrieux atlas)</strong>, regroup them into five literature-grounded attention and comprehension networks, and statistically flag sustained deviations.
               </p>
             </SectionReveal>
           </div>
 
-          <SectionReveal style={{ transitionDelay: '180ms' }}>
-            <div className="about-steps" role="list">
-              {HOW_ITEMS.map((item) => (
-                <div key={item.step} className="step-card" data-step={item.step} role="listitem">
-                  <div className="step-icon">{item.icon}</div>
-                  <h3 className="step-title">{item.title}</h3>
-                  <p className="step-body">{item.body}</p>
+          {/* Comparison Matrix Table */}
+          <SectionReveal style={{ transitionDelay: '160ms' }}>
+            <div style={{
+              background: '#FFFFFF',
+              borderRadius: '16px',
+              border: '1px solid rgba(0,0,0,0.12)',
+              boxShadow: '0 4px 24px rgba(0,0,0,0.04)',
+              overflow: 'hidden',
+              marginBottom: '56px'
+            }}>
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: '1.2fr 1fr 1.2fr',
+                background: '#EAEAEA',
+                borderBottom: '1px solid rgba(0,0,0,0.12)',
+                padding: '16px 24px',
+                fontFamily: 'Inter, sans-serif',
+                fontSize: '12px',
+                fontWeight: 800,
+                letterSpacing: '0.05em',
+                textTransform: 'uppercase',
+                color: '#111111'
+              }}>
+                <div>Dimension</div>
+                <div style={{ color: '#666666' }}>The usual approach</div>
+                <div style={{ color: '#000000' }}>PreCortex</div>
+              </div>
+
+              {[
+                {
+                  label: 'Diagnostic Signal',
+                  usual: '"Viewers dropped off around minute 6."',
+                  precortex: '"At 6:22, DorsalAttention decayed while DefaultMode rose: a mind-wandering signature."'
+                },
+                {
+                  label: 'Viewer Requirement',
+                  usual: 'Needs thousands of real viewers first',
+                  precortex: 'Needs zero viewers. Runs pre-publication.'
+                },
+                {
+                  label: 'Actionable Fix',
+                  usual: '"Add a quiz here?"',
+                  precortex: 'A falsifiable hypothesis + a rewrite, an analogy, and a quiz tied to the diagnosed cause'
+                }
+              ].map((row, idx) => (
+                <div key={row.label} style={{
+                  display: 'grid',
+                  gridTemplateColumns: '1.2fr 1fr 1.2fr',
+                  padding: '20px 24px',
+                  borderBottom: idx === 2 ? 'none' : '1px solid rgba(0,0,0,0.08)',
+                  background: idx % 2 === 1 ? '#FAFAFA' : '#FFFFFF',
+                  fontFamily: 'Inter, sans-serif',
+                  fontSize: '14px',
+                  lineHeight: 1.55
+                }}>
+                  <div style={{ fontWeight: 700, color: '#0D0D0D' }}>{row.label}</div>
+                  <div style={{ color: '#555555' }}>{row.usual}</div>
+                  <div style={{ color: '#000000', fontWeight: 650 }}>{row.precortex}</div>
                 </div>
               ))}
             </div>
           </SectionReveal>
+
+          {/* 3 Core Technical Principles */}
+          <SectionReveal style={{ transitionDelay: '200ms' }}>
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(3, 1fr)',
+              gap: '20px'
+            }}>
+              <div style={{
+                background: '#FFFFFF',
+                border: '1px solid rgba(0,0,0,0.10)',
+                borderRadius: '16px',
+                padding: '28px 24px',
+                boxShadow: '0 2px 12px rgba(0,0,0,0.02)'
+              }}>
+                <div style={{ fontSize: '11px', fontWeight: 800, letterSpacing: '0.10em', color: '#555555', textTransform: 'uppercase', marginBottom: '10px' }}>01 · Architecture</div>
+                <h3 style={{ fontSize: '16.5px', fontWeight: 700, color: '#0D0D0D', marginBottom: '10px' }}>Deterministic before generative</h3>
+                <p style={{ fontSize: '13.5px', color: '#333333', lineHeight: 1.65, margin: 0 }}>
+                  Statistics decide that a weak moment exists and describe its shape (cliff drop, gradual decay, oscillation). The LLM only reasons about why. It never sees raw data it could hallucinate trends from.
+                </p>
+              </div>
+
+              <div style={{
+                background: '#FFFFFF',
+                border: '1px solid rgba(0,0,0,0.10)',
+                borderRadius: '16px',
+                padding: '28px 24px',
+                boxShadow: '0 2px 12px rgba(0,0,0,0.02)'
+              }}>
+                <div style={{ fontSize: '11px', fontWeight: 800, letterSpacing: '0.10em', color: '#555555', textTransform: 'uppercase', marginBottom: '10px' }}>02 · Verification</div>
+                <h3 style={{ fontSize: '16.5px', fontWeight: 700, color: '#0D0D0D', marginBottom: '10px' }}>Explainable end to end</h3>
+                <p style={{ fontSize: '13.5px', color: '#333333', lineHeight: 1.65, margin: 0 }}>
+                  Every diagnosis carries its evidence: affected network, depth z-score, shape, duration, co-occurring networks, and an explicit confidence level. Judges can audit any single claim.
+                </p>
+              </div>
+
+              <div style={{
+                background: '#FFFFFF',
+                border: '1px solid rgba(0,0,0,0.10)',
+                borderRadius: '16px',
+                padding: '28px 24px',
+                boxShadow: '0 2px 12px rgba(0,0,0,0.02)'
+              }}>
+                <div style={{ fontSize: '11px', fontWeight: 800, letterSpacing: '0.10em', color: '#555555', textTransform: 'uppercase', marginBottom: '10px' }}>03 · Ethics</div>
+                <h3 style={{ fontSize: '16.5px', fontWeight: 700, color: '#0D0D0D', marginBottom: '10px' }}>Honest by design</h3>
+                <p style={{ fontSize: '13.5px', color: '#333333', lineHeight: 1.65, margin: 0 }}>
+                  We claim "activity patterns consistent with known attention correlates", not mind reading. Our spec documents every limitation, which is exactly what makes the signal defensible.
+                </p>
+              </div>
+            </div>
+          </SectionReveal>
+
         </div>
       </section>
     </>

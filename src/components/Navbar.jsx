@@ -21,26 +21,19 @@ export default function Navbar({ sections }) {
   const scrollTo = (id) => {
     const sectionIndex = navLinks.findIndex(link => link.id === id);
     if (sectionIndex !== -1) {
-      // Since each section is min-height: 100vh (full screen), the true scroll position
-      // for section index is exactly (index + 1) * window.innerHeight (offsetting the Hero section).
-      // This is a robust and deterministic scroll calculation.
       const topOffset = (sectionIndex + 1) * window.innerHeight;
-      window.scrollTo({ top: topOffset, behavior: 'smooth' });
-      setMenuOpen(false);
-    } else if (id === 'contact') {
-      // Contact is the 5th section after Hero (Index 5)
-      const topOffset = 5 * window.innerHeight;
       window.scrollTo({ top: topOffset, behavior: 'smooth' });
       setMenuOpen(false);
     }
   };
 
   const navLinks = [
-    { label: 'Intro', id: 'intro' },
-    { label: 'About', id: 'about' },
-    { label: 'Features', id: 'features' },
-    { label: 'Technology', id: 'technology' },
-    { label: 'Contact', id: 'contact' },
+    { label: 'Problem', id: 'intro' },
+    { label: 'Innovation', id: 'about' },
+    { label: 'Multi-Agent', id: 'technology' },
+    { label: 'SDG Goals', id: 'sdg' },
+    { label: 'Live Demo', id: 'work' },
+    { label: 'Pitch', id: 'contact' },
   ];
 
   return (
