@@ -255,7 +255,7 @@ export default function Navbar({ sections }) {
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
           <button className="navbar-cta" onClick={() => scrollTo('contact')}>
-            Our Product
+            Explore
           </button>
           <button
             className={`navbar-hamburger${menuOpen ? ' open' : ''}`}
