@@ -1,0 +1,466 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tribe Playback</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root {
+    --bg: #0D1218;
+    --panel: #151C24;
+    --panel-edge: #232D38;
+    --text: #E4EBF2;
+    --muted: #7E8C99;
+    --accent: #E0A050;
+    --sans: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  header {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    padding: 12px 20px 10px;
+    border-bottom: 1px solid var(--panel-edge);
+    flex-wrap: wrap;
+  }
+  header h1 { font-size: 16px; font-weight: 600; letter-spacing: 0.01em; }
+  header .sub { color: var(--muted); font-size: 13px; }
+  header .stats {
+    margin-left: auto;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--muted);
+    display: flex;
+    gap: 18px;
+    font-variant-numeric: tabular-nums;
+  }
+  header .stats b { color: var(--text); font-weight: 500; }
+  #stage { position: relative; flex: 1; min-height: 0; }
+  #gl { position: absolute; inset: 0; width: 100%; height: 100%; display: block; cursor: grab; touch-action: none; }
+  #gl.dragging { cursor: grabbing; }
+  .hint {
+    position: absolute;
+    top: 12px;
+    left: 16px;
+    font-size: 12px;
+    color: var(--muted);
+    background: color-mix(in srgb, var(--bg) 78%, transparent);
+    padding: 5px 10px;
+    border-radius: 4px;
+    pointer-events: none;
+    transition: opacity 0.6s;
+  }
+  .legend {
+    position: absolute;
+    right: 16px;
+    top: 14px;
+    width: 150px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    text-align: center;
+  }
+  .legend .bar {
+    height: 8px;
+    border-radius: 4px;
+    border: 1px solid var(--panel-edge);
+    background: linear-gradient(90deg,
+      #3B6FC9 0%, #6E86B8 25%, #8E8E8E 50%, #C97F5A 75%, #E0663A 100%);
+  }
+  .legend .row { display: flex; justify-content: space-between; margin-top: 4px; }
+  .legend .cap { margin-top: 2px; letter-spacing: 0.06em; text-transform: uppercase; font-size: 10px; }
+  #film {
+    position: absolute;
+    left: 16px;
+    bottom: 14px;
+    width: 200px;
+    display: none;
+    border: 1px solid var(--panel-edge);
+    border-radius: 6px;
+    overflow: hidden;
+    background: var(--panel);
+  }
+  #film img { display: block; width: 100%; }
+  #film .cap {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--muted);
+    padding: 4px 8px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  #transport {
+    border-top: 1px solid var(--panel-edge);
+    background: var(--panel);
+    padding: 12px 20px 16px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  #play {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    border: 1px solid var(--panel-edge);
+    background: var(--bg);
+    color: var(--accent);
+    font-size: 15px;
+    cursor: pointer;
+    flex: none;
+    display: grid;
+    place-items: center;
+  }
+  #play:hover { border-color: var(--accent); }
+  #play:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .rail-wrap { flex: 1; min-width: 0; }
+  .rail { position: relative; height: 34px; cursor: pointer; }
+  .rail .track {
+    position: absolute; left: 0; right: 0; top: 14px; height: 6px;
+    border-radius: 3px;
+    background: #0A0F14;
+    border: 1px solid var(--panel-edge);
+  }
+  .rail .fill {
+    position: absolute; left: 0; top: 14px; height: 6px;
+    border-radius: 3px 0 0 3px;
+    background: var(--accent);
+    width: 0;
+    pointer-events: none;
+  }
+  .rail .tick { position: absolute; top: 8px; width: 1px; height: 18px; background: var(--panel-edge); }
+  .rail .tick.chunk { background: var(--muted); }
+  .rail .tick-label {
+    position: absolute; top: -8px; transform: translateX(-50%);
+    font-family: var(--mono); font-size: 10px; color: var(--muted); white-space: nowrap;
+  }
+  .rail .thumb {
+    position: absolute; top: 9px; width: 16px; height: 16px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid var(--bg);
+    transform: translateX(-50%);
+    pointer-events: none;
+    box-shadow: 0 0 0 1px var(--panel-edge);
+  }
+  #clock {
+    font-family: var(--mono);
+    font-size: 14px;
+    font-variant-numeric: tabular-nums;
+    color: var(--text);
+    flex: none;
+    min-width: 110px;
+    text-align: right;
+  }
+  #clock span { color: var(--muted); }
+  @media (max-width: 640px) {
+    header .stats { display: none; }
+    .legend { display: none; }
+    #film { width: 140px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hint { transition: none; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1 id="pagetitle"></h1>
+  <span class="sub" id="subtitle">predicted brain response, second by second</span>
+  <div class="stats" id="stats"></div>
+</header>
+
+<div id="stage">
+  <canvas id="gl"></canvas>
+  <div class="hint" id="hint">drag to rotate &middot; scroll to zoom &middot; space to play</div>
+  <div class="legend">
+    <div class="bar"></div>
+    <div class="row"><span id="limNeg"></span><span>0</span><span id="limPos"></span></div>
+    <div class="cap">predicted activation</div>
+  </div>
+  <div id="film"><img id="filmImg" alt="video frame at current second"><div class="cap">source video</div></div>
+</div>
+
+<div id="transport">
+  <button id="play" aria-label="Play">&#9654;</button>
+  <div class="rail-wrap"><div class="rail" id="rail">
+    <div class="track"></div>
+    <div class="fill" id="fill"></div>
+    <div class="thumb" id="thumb"></div>
+  </div></div>
+  <div id="clock"></div>
+</div>
+
+<script id="braindata" type="application/json">__BRAINDATA__</script>
+<script>
+"use strict";
+const D = JSON.parse(document.getElementById("braindata").textContent);
+
+function b64ToBytes(s) {
+  const bin = atob(s);
+  const out = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) out[i] = bin.charCodeAt(i);
+  return out;
+}
+const coords = new Float32Array(b64ToBytes(D.coords).buffer);
+const faces = new Uint32Array(b64ToBytes(D.faces).buffer);
+const bg = b64ToBytes(D.bg);
+const frames = b64ToBytes(D.frames);
+const NV = D.n_vertices, NF = D.n_frames;
+const DUR = NF;
+const thumbs = D.thumbs || [];
+const meta = D.meta || {};
+
+document.getElementById("limNeg").textContent = "-" + D.limit.toFixed(1);
+document.getElementById("limPos").textContent = "+" + D.limit.toFixed(1);
+{
+  const s = document.getElementById("stats");
+  const items = [
+    "<span><b>" + NV.toLocaleString() + "</b> vertices</span>",
+    "<span><b>" + NF + "</b> frames &middot; TR <b>" + (meta.tr || 1).toFixed(1) + "</b>s</span>",
+  ];
+  if (meta.n_chunks > 1) items.push("<span>chunks <b>" + meta.n_chunks + "</b> &times; &le;" + Math.round(meta.chunk_seconds || 25) + "s</span>");
+  s.innerHTML = items.join("");
+  const ts = meta.generated_at || "";
+  document.getElementById("pagetitle").textContent = ts;
+  if (ts) document.title = ts;
+  if (meta.upload) document.getElementById("subtitle").textContent = meta.upload + " — predicted brain response, second by second";
+}
+
+// ---- vertex normals ----
+const normals = new Float32Array(NV * 3);
+for (let f = 0; f < faces.length; f += 3) {
+  const a = faces[f] * 3, b = faces[f + 1] * 3, c = faces[f + 2] * 3;
+  const ux = coords[b] - coords[a], uy = coords[b+1] - coords[a+1], uz = coords[b+2] - coords[a+2];
+  const vx = coords[c] - coords[a], vy = coords[c+1] - coords[a+1], vz = coords[c+2] - coords[a+2];
+  const nx = uy * vz - uz * vy, ny = uz * vx - ux * vz, nz = ux * vy - uy * vx;
+  for (const i of [a, b, c]) { normals[i] += nx; normals[i+1] += ny; normals[i+2] += nz; }
+}
+for (let i = 0; i < NV; i++) {
+  const o = i * 3;
+  const l = Math.hypot(normals[o], normals[o+1], normals[o+2]) || 1;
+  normals[o] /= l; normals[o+1] /= l; normals[o+2] /= l;
+}
+let cx = 0, cy = 0, cz = 0;
+for (let i = 0; i < NV; i++) { cx += coords[i*3]; cy += coords[i*3+1]; cz += coords[i*3+2]; }
+cx /= NV; cy /= NV; cz /= NV;
+for (let i = 0; i < NV; i++) { coords[i*3] -= cx; coords[i*3+1] -= cy; coords[i*3+2] -= cz; }
+
+// ---- WebGL ----
+const canvas = document.getElementById("gl");
+const gl = canvas.getContext("webgl2", { antialias: true });
+const VS = `#version 300 es
+in vec3 pos; in vec3 nrm; in float curv; in float va; in float vb;
+uniform mat4 uProj, uView;
+uniform float uMix;
+out float vVal; out float vCurv; out vec3 vN;
+void main() {
+  vVal = mix(va, vb, uMix);
+  vCurv = curv;
+  vN = mat3(uView) * nrm;
+  gl_Position = uProj * uView * vec4(pos, 1.0);
+}`;
+const FS = `#version 300 es
+precision highp float;
+in float vVal; in float vCurv; in vec3 vN;
+out vec4 frag;
+vec3 cmap(float t) {
+  vec3 c0 = vec3(0.231, 0.435, 0.788);
+  vec3 cm = vec3(0.557, 0.557, 0.557);
+  vec3 c1 = vec3(0.878, 0.400, 0.227);
+  return t < 0.5 ? mix(c0, cm, t * 2.0) : mix(cm, c1, (t - 0.5) * 2.0);
+}
+void main() {
+  vec3 base = cmap(vVal);
+  float curvShade = 0.82 + 0.18 * vCurv;
+  vec3 n = normalize(vN);
+  float diff = max(dot(n, normalize(vec3(0.25, 0.35, 1.0))), 0.0);
+  float light = 0.38 + 0.62 * diff;
+  frag = vec4(base * curvShade * light, 1.0);
+}`;
+function shader(type, src) {
+  const s = gl.createShader(type);
+  gl.shaderSource(s, src); gl.compileShader(s);
+  if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) throw gl.getShaderInfoLog(s);
+  return s;
+}
+const prog = gl.createProgram();
+gl.attachShader(prog, shader(gl.VERTEX_SHADER, VS));
+gl.attachShader(prog, shader(gl.FRAGMENT_SHADER, FS));
+gl.linkProgram(prog);
+if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) throw gl.getProgramInfoLog(prog);
+gl.useProgram(prog);
+
+function attrib(name, data, size, type, normalized) {
+  const buf = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+  gl.bufferData(gl.ARRAY_BUFFER, data, gl.DYNAMIC_DRAW);
+  const loc = gl.getAttribLocation(prog, name);
+  gl.enableVertexAttribArray(loc);
+  gl.vertexAttribPointer(loc, size, type, normalized, 0, 0);
+  return buf;
+}
+attrib("pos", coords, 3, gl.FLOAT, false);
+attrib("nrm", normals, 3, gl.FLOAT, false);
+attrib("curv", bg, 1, gl.UNSIGNED_BYTE, true);
+const bufA = attrib("va", frames.subarray(0, NV), 1, gl.UNSIGNED_BYTE, true);
+const bufB = attrib("vb", frames.subarray(Math.min(NV, frames.length - NV), Math.min(NV * 2, frames.length)), 1, gl.UNSIGNED_BYTE, true);
+
+const idx = gl.createBuffer();
+gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, idx);
+gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, faces, gl.STATIC_DRAW);
+
+const uProj = gl.getUniformLocation(prog, "uProj");
+const uView = gl.getUniformLocation(prog, "uView");
+const uMix = gl.getUniformLocation(prog, "uMix");
+gl.enable(gl.DEPTH_TEST);
+gl.clearColor(0.051, 0.071, 0.094, 1);
+
+let yaw = 0.9, pitch = -0.35, dist = 320;
+function persp(fov, asp, near, far) {
+  const f = 1 / Math.tan(fov / 2), d = near - far;
+  return [f/asp,0,0,0, 0,f,0,0, 0,0,(near+far)/d,-1, 0,0,2*near*far/d,0];
+}
+function viewMat() {
+  const cy = Math.cos(yaw), sy = Math.sin(yaw);
+  const cp = Math.cos(pitch), sp = Math.sin(pitch);
+  return [cy, sy*sp, sy*cp, 0, -sy, cy*sp, cy*cp, 0, 0, cp, -sp, 0, 0, 0, -dist, 1];
+}
+
+let t = 0, playing = false, lastTs = null, loadedA = -1, shownThumb = -1;
+const playBtn = document.getElementById("play");
+const fill = document.getElementById("fill");
+const thumb = document.getElementById("thumb");
+const clock = document.getElementById("clock");
+const rail = document.getElementById("rail");
+const hint = document.getElementById("hint");
+const film = document.getElementById("film");
+const filmImg = document.getElementById("filmImg");
+if (thumbs.length) film.style.display = "block";
+
+// timeline ticks: every 5 s, chunk boundaries emphasized
+{
+  const bounds = [];
+  const cs = meta.chunk_seconds || 25;
+  for (let k = 1; k < (meta.n_chunks || 1); k++) bounds.push(k * cs);
+  for (let s = 5; s < DUR; s += 5) {
+    if (bounds.includes(s)) continue;
+    const tk = document.createElement("div");
+    tk.className = "tick";
+    tk.style.left = (s / DUR * 100) + "%";
+    rail.appendChild(tk);
+  }
+  bounds.forEach((s, i) => {
+    if (s >= DUR) return;
+    const tk = document.createElement("div");
+    tk.className = "tick chunk";
+    tk.style.left = (s / DUR * 100) + "%";
+    rail.appendChild(tk);
+    const lb = document.createElement("div");
+    lb.className = "tick-label";
+    lb.style.left = (s / DUR * 100) + "%";
+    lb.textContent = "chunk " + (i + 2);
+    rail.appendChild(lb);
+  });
+}
+
+function setFrameBuffers() {
+  const i = Math.min(Math.floor(t), NF - 1);
+  const j = Math.min(i + 1, NF - 1);
+  if (i !== loadedA) {
+    gl.bindBuffer(gl.ARRAY_BUFFER, bufA);
+    gl.bufferData(gl.ARRAY_BUFFER, frames.subarray(i * NV, (i + 1) * NV), gl.DYNAMIC_DRAW);
+    gl.bindBuffer(gl.ARRAY_BUFFER, bufB);
+    gl.bufferData(gl.ARRAY_BUFFER, frames.subarray(j * NV, (j + 1) * NV), gl.DYNAMIC_DRAW);
+    loadedA = i;
+  }
+  if (thumbs.length && i !== shownThumb && thumbs[i]) {
+    filmImg.src = thumbs[i];
+    shownThumb = i;
+  }
+  return t - i;
+}
+function updateTransport() {
+  const pct = t / DUR * 100;
+  fill.style.width = pct + "%";
+  thumb.style.left = pct + "%";
+  clock.innerHTML = t.toFixed(1) + "<span> / " + DUR.toFixed(1) + " s</span>";
+}
+function resize() {
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  const w = canvas.clientWidth, h = canvas.clientHeight;
+  if (canvas.width !== w * dpr || canvas.height !== h * dpr) {
+    canvas.width = w * dpr; canvas.height = h * dpr;
+    gl.viewport(0, 0, canvas.width, canvas.height);
+  }
+}
+function draw(ts) {
+  resize();
+  if (playing) {
+    if (lastTs !== null) t += (ts - lastTs) / 1000;
+    if (t >= DUR) t = 0;
+  }
+  lastTs = ts;
+  const mixT = setFrameBuffers();
+  updateTransport();
+  gl.uniformMatrix4fv(uProj, false, persp(0.62, canvas.width / canvas.height, 10, 2000));
+  gl.uniformMatrix4fv(uView, false, viewMat());
+  gl.uniform1f(uMix, mixT);
+  gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+  gl.drawElements(gl.TRIANGLES, faces.length, gl.UNSIGNED_INT, 0);
+  requestAnimationFrame(draw);
+}
+requestAnimationFrame(draw);
+
+function setPlaying(p) {
+  playing = p;
+  playBtn.innerHTML = p ? "&#10074;&#10074;" : "&#9654;";
+  playBtn.setAttribute("aria-label", p ? "Pause" : "Play");
+}
+playBtn.addEventListener("click", () => setPlaying(!playing));
+document.addEventListener("keydown", (e) => {
+  if (e.code === "Space") { e.preventDefault(); setPlaying(!playing); }
+  if (e.code === "ArrowRight") t = Math.min(DUR - 0.001, t + 1);
+  if (e.code === "ArrowLeft") t = Math.max(0, t - 1);
+});
+function railSeek(e) {
+  const r = rail.getBoundingClientRect();
+  const x = (e.touches ? e.touches[0].clientX : e.clientX) - r.left;
+  t = Math.min(Math.max(x / r.width, 0), 0.9999) * DUR;
+}
+let seeking = false;
+rail.addEventListener("pointerdown", (e) => { seeking = true; rail.setPointerCapture(e.pointerId); railSeek(e); });
+rail.addEventListener("pointermove", (e) => { if (seeking) railSeek(e); });
+rail.addEventListener("pointerup", () => { seeking = false; });
+
+let dragging = false, px = 0, py = 0, interacted = false;
+canvas.addEventListener("pointerdown", (e) => {
+  dragging = true; px = e.clientX; py = e.clientY;
+  canvas.classList.add("dragging");
+  canvas.setPointerCapture(e.pointerId);
+  if (!interacted) { interacted = true; hint.style.opacity = "0"; }
+});
+canvas.addEventListener("pointermove", (e) => {
+  if (!dragging) return;
+  yaw += (e.clientX - px) * 0.008;
+  pitch = Math.min(1.5, Math.max(-1.5, pitch + (e.clientY - py) * 0.008));
+  px = e.clientX; py = e.clientY;
+});
+canvas.addEventListener("pointerup", () => { dragging = false; canvas.classList.remove("dragging"); });
+canvas.addEventListener("wheel", (e) => {
+  e.preventDefault();
+  dist = Math.min(900, Math.max(140, dist * (1 + e.deltaY * 0.001)));
+}, { passive: false });
+</script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+# secrets
+.env
+
+# virtualenvs
+tribe-fresh/
+*venv*/
+
+# python
+__pycache__/
+*.pyc
+
+# generated outputs & caches
+outputs/
+cache/
+full_mode_out/
+self_test_out/
+self_test_fast/
+self_test_chunked/
+windows/
+matrix_output.json
+
+# media test assets
+*.mp4
+*.wav
+*.mp3

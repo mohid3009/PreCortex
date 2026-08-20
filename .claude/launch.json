@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "tribe-gpu-server",
+      "runtimeExecutable": "C:/Users/Mohid/tribe-fresh/Scripts/python.exe",
+      "runtimeArgs": [
+        "-m", "uvicorn",
+        "main:app",
+        "--app-dir", "local-server",
+        "--host", "0.0.0.0",
+        "--port", "8001"
+      ],
+      "port": 8001
+    }
+  ]
+}
