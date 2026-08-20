@@ -122,15 +122,19 @@ def _predict_chunked(source: Path) -> "tuple[np.ndarray, np.ndarray, float]":
     with tempfile.TemporaryDirectory(prefix="tribe_chunks_") as tmp:
         chunks, duration = tribe_backend.split_audio(source, Path(tmp))
         all_preds, all_bounds = [], []
-        for chunk_path, offset in chunks:
+        for chunk_path, extract_start, keep_lo, keep_hi in chunks:
             events = tribe_backend._audio_only_events(chunk_path)
             preds, segments = model.predict(events)
             preds = np.asarray(preds, dtype=np.float32)
             if preds.ndim == 1:
                 preds = preds[None, :]
             bounds = tribe_backend._segment_bounds(segments, preds.shape[0], model.data.TR)
-            all_preds.append(preds)
-            all_bounds.append(bounds + offset)
+            bounds = bounds + extract_start
+            # keep only the core interval -- the overlap context on each side
+            # exists to prevent spike/dip artifacts at the chunk seams
+            keep = (bounds[:, 0] >= keep_lo - 1e-6) & (bounds[:, 0] < keep_hi - 1e-6)
+            all_preds.append(preds[keep])
+            all_bounds.append(bounds[keep])
             del events, segments
             tribe_backend._release_gpu()
     return np.concatenate(all_preds), np.concatenate(all_bounds), duration

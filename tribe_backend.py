@@ -40,6 +40,7 @@ from tribev2.plotting import PlotBrainPyvista
 
 WINDOW_SECONDS = 1.0   # one JSON + heatmap per second of content
 CHUNK_SECONDS = 25.0   # long audio is split into chunks this size and run per-chunk
+CHUNK_OVERLAP_SECONDS = 5.0  # context audio included on each side of a chunk
 
 # Modalities the model is allowed to load extractors for. "video" is omitted
 # on purpose; "text" stays because the audio pipeline transcribes speech.
@@ -177,24 +178,36 @@ def audio_duration(path: Path) -> float:
         raise RuntimeError(f"Could not read duration of {path.name}:\n{result.stderr.strip()}")
 
 
-def split_audio(source: Path, out_dir: Path, chunk_seconds: float = CHUNK_SECONDS):
-    """Split audio into fixed-size WAV chunks; returns [(chunk_path, offset_s)].
+def split_audio(source: Path, out_dir: Path, chunk_seconds: float = CHUNK_SECONDS,
+                overlap_seconds: float = CHUNK_OVERLAP_SECONDS):
+    """Split audio into overlapping WAV chunks.
 
-    Audio at or under `chunk_seconds` is returned as-is with offset 0.
+    Returns ([(chunk_path, extract_start_s, keep_lo_s, keep_hi_s)], duration).
+
+    Each chunk covers a core interval of `chunk_seconds` but is extracted with
+    `overlap_seconds` of surrounding audio on each side, giving the model real
+    context at the seams. Only predictions whose start time falls inside
+    [keep_lo, keep_hi) should be kept -- without this, every chunk edge shows a
+    spike/dip artifact from the model running out of context.
+
+    Audio at or under `chunk_seconds` is returned as one full-keep chunk.
     """
     duration = audio_duration(source)
     if duration <= chunk_seconds:
-        return [(source, 0.0)], duration
+        return [(source, 0.0, 0.0, float("inf"))], duration
 
     out_dir.mkdir(parents=True, exist_ok=True)
     chunks = []
-    offset = 0.0
     index = 0
-    while offset < duration - 0.05:  # skip a trailing sliver of <50ms
+    core_lo = 0.0
+    while core_lo < duration - 0.05:  # skip a trailing sliver of <50ms
+        core_hi = min(core_lo + chunk_seconds, duration)
+        extract_lo = max(0.0, core_lo - overlap_seconds)
+        extract_hi = min(duration, core_hi + overlap_seconds)
         chunk = out_dir / f"{source.stem}_chunk{index:03d}.wav"
         command = [
             "ffmpeg", "-y", "-loglevel", "error",
-            "-ss", f"{offset:.3f}", "-t", f"{chunk_seconds:.3f}",
+            "-ss", f"{extract_lo:.3f}", "-t", f"{extract_hi - extract_lo:.3f}",
             "-i", str(source),
             "-vn", "-ac", str(AUDIO_CHANNELS), "-ar", str(AUDIO_SAMPLE_RATE),
             "-c:a", "pcm_s16le",
@@ -205,10 +218,11 @@ def split_audio(source: Path, out_dir: Path, chunk_seconds: float = CHUNK_SECOND
             raise RuntimeError(
                 f"ffmpeg failed to cut chunk {index} of {source.name}:\n{result.stderr.strip()}"
             )
-        chunks.append((chunk, offset))
-        offset += chunk_seconds
+        chunks.append((chunk, extract_lo, core_lo, core_hi))
+        core_lo += chunk_seconds
         index += 1
-    print(f"Split {source.name} ({duration:.1f}s) into {len(chunks)} chunks of <= {chunk_seconds:.0f}s")
+    print(f"Split {source.name} ({duration:.1f}s) into {len(chunks)} chunks of "
+          f"{chunk_seconds:.0f}s (+{overlap_seconds:.0f}s context each side)")
     return chunks, duration
 
 
@@ -400,10 +414,10 @@ def run(
     if modality == "audio":
         chunks, _ = split_audio(source, out_dir / "audio", chunk_seconds)
     else:
-        chunks = [(source, 0.0)]
+        chunks = [(source, 0.0, 0.0, float("inf"))]
 
     all_preds, all_bounds = [], []
-    for chunk_index, (chunk_path, offset) in enumerate(chunks):
+    for chunk_index, (chunk_path, extract_start, keep_lo, keep_hi) in enumerate(chunks):
         if fast:
             events = _audio_only_events(chunk_path)
         else:
@@ -414,7 +428,11 @@ def run(
         preds = np.asarray(preds, dtype=np.float32)
         if preds.ndim == 1:
             preds = preds[None, :]
-        chunk_bounds = _segment_bounds(segments, preds.shape[0], model.data.TR) + offset
+        chunk_bounds = _segment_bounds(segments, preds.shape[0], model.data.TR) + extract_start
+        # drop the overlap-context predictions: chunk edges carry spike/dip
+        # artifacts from the model running out of context there
+        keep = (chunk_bounds[:, 0] >= keep_lo - 1e-6) & (chunk_bounds[:, 0] < keep_hi - 1e-6)
+        preds, chunk_bounds = preds[keep], chunk_bounds[keep]
 
         all_preds.append(preds)
         all_bounds.append(chunk_bounds)
@@ -423,12 +441,12 @@ def run(
         chunk_infos.append(
             {
                 "chunk_index": chunk_index,
-                "offset_seconds": round(offset, 3),
+                "offset_seconds": round(keep_lo, 3),
                 "n_timesteps": int(preds.shape[0]),
             }
         )
         if len(chunks) > 1:
-            print(f"  chunk {chunk_index + 1}/{len(chunks)} done ({preds.shape[0]} timesteps)")
+            print(f"  chunk {chunk_index + 1}/{len(chunks)} done ({preds.shape[0]} timesteps kept)")
 
     predictions = np.concatenate(all_preds)
     bounds = np.concatenate(all_bounds)
